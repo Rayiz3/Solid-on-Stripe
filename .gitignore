@@ -1,0 +1,3 @@
+./stripeClient/node_modules
+./stripeClient/dist
+./stripeServer/venv
