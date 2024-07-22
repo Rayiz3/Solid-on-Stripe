@@ -5,7 +5,6 @@ import { Elements } from '../components/Elements';
 import { elementStyle } from '../property/Styles';
 import { stripeSys } from '../system/Stripe';
 import CheckoutForm from '../components/CheckoutForm';
-import { elementSys } from '../system/Element';
 
 const container = style({
   fontFamily: "-apple-getSystemErrorMap, BlinkMacSystemFont, sans-serif",
@@ -19,8 +18,7 @@ const container = style({
 })
 
 const PaymentPage: Component = () => {
-  // Make sure to call loadStripe only once
-  // to avoid recreating the Stripe object on every render.
+  // Make sure to call loadStripe only once to avoid recreating the Stripe object on every render.
   onMount(() => {
     stripeSys.initialize()
   });
