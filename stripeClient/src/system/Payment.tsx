@@ -5,14 +5,13 @@ import { CardNumber } from '../components/CardNumber';
 import { CardCvc } from '../components/CardCvc';
 import { Iban } from '../components/Iban';
 import { Ideal } from '../components/Ideal';
+import { links } from '../property/Links';
 
 class PaymentSys {
     message: Accessor<string | null>
     setMessage: Setter<string | null>
     isLoading: Accessor<boolean>
     setIsLoading: Setter<boolean>
-    returnURL: string = "http://localhost:3000/redirection"
-
     constructor() {
         // Initialize some state to keep track of the payment, show errors, and manage the user interface.
         ([this.message, this.setMessage] = createSignal<string|null>(null)),
@@ -79,7 +78,7 @@ class PaymentSys {
             // For payments that require authentication, Stripe displays a modal for 3D Secure authentication
             // or redirects the customer to an authentication page, depending on the payment method.
             // After the customer completes the authentication process, they’re redirected to the return_url.
-            return_url: this.returnURL,
+            return_url: links.redirection,
             // more about confirmParams : https://docs.stripe.com/js/payment_intents/confirm_payment
           },
         });
@@ -110,7 +109,7 @@ class PaymentSys {
             elements: elements!,
             clientSecret: stripeSys.getClientSecret(),
             confirmParams: {
-                return_url: this.returnURL,
+                return_url: links.redirection,
             }
         })
 
@@ -144,7 +143,7 @@ class PaymentSys {
                 },
                 // more about payment_method : https://docs.stripe.com/api/payment_methods
             },
-            return_url: this.returnURL,
+            return_url: links.redirection,
             // more about confirmCardPayment : https://docs.stripe.com/js/payment_intents/confirm_card_payment
         })
 
@@ -168,7 +167,7 @@ class PaymentSys {
                     email: formData.get('email') as string,
                 }
             },
-            return_url: this.returnURL,
+            return_url: links.redirection,
         })
     }
     
@@ -181,7 +180,7 @@ class PaymentSys {
             payment_method: {
                 ideal: elements!.getElement(Ideal)!
             },
-            return_url: this.returnURL,
+            return_url: links.redirection,
         })
     }
 }
