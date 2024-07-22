@@ -5,6 +5,7 @@ import { Elements } from '../components/Elements';
 import { elementStyle } from '../property/Styles';
 import { stripeSys } from '../system/Stripe';
 import CheckoutForm from '../components/CheckoutForm';
+import { elementSys } from '../system/Element';
 
 const container = style({
   fontFamily: "-apple-getSystemErrorMap, BlinkMacSystemFont, sans-serif",
@@ -20,9 +21,8 @@ const container = style({
 const PaymentPage: Component = () => {
   // Make sure to call loadStripe only once
   // to avoid recreating the Stripe object on every render.
-  onMount(async () => {
-    stripeSys.getStripe()
-    stripeSys.getPaymentIntent()
+  onMount(() => {
+    stripeSys.initialize()
   });
 
   // Pass the resulting promise from loadStripe & clientSecret to the <Elements> provider.
@@ -43,7 +43,7 @@ const PaymentPage: Component = () => {
     <div class={container}>
       <Show when={stripeSys.clientSecret()} fallback={<div>Loading stripe...</div>}>
         <Elements stripe={stripeSys.stripe()}
-                  clientSecret={stripeSys.getClientSecret()}
+                  clientSecret={stripeSys.clientSecret()}
                   theme={elementStyle.theme}
                   variables={elementStyle.variables}
                   rules={elementStyle.rules}

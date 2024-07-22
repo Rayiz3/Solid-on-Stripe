@@ -107,7 +107,7 @@ class PaymentSys {
 
         const { error } = await stripe!.confirmPayment({
             elements: elements!,
-            clientSecret: stripeSys.getClientSecret(),
+            clientSecret: stripeSys.clientSecret(),
             confirmParams: {
                 return_url: links.redirection,
             }
@@ -132,7 +132,7 @@ class PaymentSys {
 
         this.setIsLoading(true);
         
-        const { error } = await stripe!.confirmCardPayment(stripeSys.getClientSecret(), {
+        const { error } = await stripe!.confirmCardPayment(stripeSys.clientSecret(), {
             payment_method: {
                 card: elements!.getElement(CardNumber)!,
                 billing_details: {
@@ -159,7 +159,7 @@ class PaymentSys {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
 
-        const { error } = await stripe!.confirmSepaDebitPayment(stripeSys.getClientSecret(), {
+        const { error } = await stripe!.confirmSepaDebitPayment(stripeSys.clientSecret(), {
             payment_method: {
                 sepa_debit: elements!.getElement(Iban)!,
                 billing_details: {
@@ -176,7 +176,7 @@ class PaymentSys {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
 
-        const { error } = await stripe!.confirmIdealPayment(stripeSys.getClientSecret(), {
+        const { error } = await stripe!.confirmIdealPayment(stripeSys.clientSecret(), {
             payment_method: {
                 ideal: elements!.getElement(Ideal)!
             },

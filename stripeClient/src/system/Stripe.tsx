@@ -1,6 +1,8 @@
 import { createSignal, Accessor, Setter } from 'solid-js';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { keys } from '../property/Keys';
+import { links } from '../property/Links';
+import { elementSys } from './Element';
 
 class StripeSys {
     stripe: Accessor<Stripe | null>
@@ -20,26 +22,24 @@ class StripeSys {
         ([this.clientSecret, this.setClientSecret] = createSignal<string>(""))
     }
 
-    // GetStripe : load Stripe from public key 
-    getStripe = async () => {
-        const result = await loadStripe(keys.publicAudai);
-        this.setStripe(result!);
-    }
+    // initialize : get stripe, client secret and elements
+    //     stripe - entrypoint to the rest of the Stripe.js SDK.
+    //     client secret - string value that is used for user identification
+    //     element - object for payment UI (payment element, express check, etc.)
+    initialize = async () => {
+        // load Stripe from public key 
+        this.setStripe(await loadStripe(keys.publicAudai)!);
 
-    // GetPaymentIntent : get client secret from server
-    getPaymentIntent = async () => {
-        const res = await fetch("http://localhost:4242/create-payment-intent", {
+        // get client secret from server
+        const res = await fetch(links.requestToServer, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(this.sampleData),
         }).then((res) => res.json())
         
         this.setClientSecret(res.clientSecret);
-    }
-
-    // GetClientSecret : get string typed client scret
-    getClientSecret = () => {
-        return this.clientSecret();
+        
+        elementSys.getElements()
     }
 }
 
