@@ -2,7 +2,7 @@ import type { StripeLinkAuthenticationElementChangeEvent, StripeLinkAuthenticati
 import type { Component } from 'solid-js'
 import { createWrapper } from '../primitives/createWrapper'
 import { createStripeElement } from '../primitives/createStripeElement'
-import type { ElementProps } from '../types'
+import type { ElementProps } from '../Types'
 
 export type LinkAuthenticationElementProps = ElementProps<'linkAuthentication', StripeLinkAuthenticationElementChangeEvent & { error: undefined }> & {
   defaultValues?: StripeLinkAuthenticationElementOptions['defaultValues']

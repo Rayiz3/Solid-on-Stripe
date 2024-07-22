@@ -6,7 +6,7 @@ import type {
 } from '@stripe/stripe-js'
 import type { Component, Setter } from 'solid-js'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
-import type { ElementProps } from '../types'
+import type { ElementProps } from '../Types'
 import { useStripe, useStripeElements } from './Elements'
 
 export type PaymentRequestButtonProps = ElementProps<'paymentRequestButton'>

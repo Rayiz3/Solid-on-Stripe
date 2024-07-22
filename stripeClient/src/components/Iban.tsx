@@ -3,7 +3,7 @@ import { mergeProps, splitProps } from 'solid-js'
 import type { StripeIbanElementChangeEvent, StripeIbanElementOptions } from '@stripe/stripe-js'
 import { createWrapper } from '../primitives/createWrapper'
 import { createStripeElement } from '../primitives/createStripeElement'
-import type { ElementProps } from '../types'
+import type { ElementProps } from '../Types'
 
 export type IbanElementProps = ElementProps<'iban', StripeIbanElementChangeEvent> & StripeIbanElementOptions
 
