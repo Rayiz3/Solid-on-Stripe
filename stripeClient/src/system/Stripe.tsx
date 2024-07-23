@@ -2,7 +2,6 @@ import { createSignal, Accessor, Setter } from 'solid-js';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { keys } from '../property/Keys';
 import { links } from '../property/Links';
-import { elementSys } from './Element';
 
 class StripeSys {
     stripe: Accessor<Stripe | null>

@@ -3,26 +3,35 @@ import { paymentSys } from '../system/Payment';
 import { keyframes, style } from '@macaron-css/core';
 import { stripeSys } from '../system/Stripe';
 import { elementSys } from '../system/Element';
+import { themeSys } from '../system/Theme';
+import { fonts } from '../property/Styles';
+import { size } from '../property/Size';
 
 const paynowButton = style({
-    background: "#5469d4",
-    fontFamily: "Arial, sans-serif",
-    color: "#ffffff",
-    borderRadius: "4px",
-    border: "0",
-    padding: "12px 16px",
-    fontSize: "16px",
-    fontWeight: "600",
-    cursor: "pointer",
     display: "block",
-    transition: "all 0.2s ease",
+    padding: size.space.lg,
+
+    fontSize: size.fontSizes.xxs,
+    fontWeight: size.fontWeight.semiBold,
+    fontFamily: fonts.paynow,
+
+    transition: size.transition.fast,
+    boxSizing: 'border-box',
     boxShadow: "0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)",
+    borderRadius: size.radius.sm,
+    backgroundColor: themeSys.state.primary1,
+    color: themeSys.state.bg1,
     width: "100%",
+    border: 'none',
+
+    cursor: "pointer",
+
     ":hover": {
-      filter: "contrast(115%)",
+      filter: 'brightness(1.12)',
     },
+
     ":disabled": {
-      opacity: "0.5",
+      opacity: size.opacity.lg,
       cursor: "default",
     }
   })
@@ -41,12 +50,12 @@ const paynowButton = style({
   const paynowSpinner = style({
     borderRadius: "50%",
     color: "#ffffff",
-    fontSize: "22px",
+    fontSize: size.fontSizes.md,
     textIndent: "-99999px",
     margin: "0px auto",
     position: "relative",
-    width: "20px",
-    height: "20px",
+    width: size.space.xl,
+    height: size.space.xl,
     boxShadow: "inset 0 0 0 2px",
     WebkitTransform: "translateZ(0)",
     msTransform: "translateZ(0)",
@@ -54,7 +63,7 @@ const paynowButton = style({
   
     ":before": { 
       height: "20.4px",
-      background: "#5469d4",
+      background: themeSys.state.primary1,
       borderRadius: "20.4px 0 0 20.4px",
       top: "-0.2px",
       left: "-0.2px",
@@ -65,7 +74,7 @@ const paynowButton = style({
     },
     ":after": {
       height: "10.2px",
-      background: "#5469d4",
+      background: themeSys.state.primary1,
       borderRadius: "0 10.2px 10.2px 0",
       top: "-0.1px",
       left: "10.2px",

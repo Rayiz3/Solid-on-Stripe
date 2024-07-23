@@ -15,22 +15,21 @@ import { Iban } from './Iban';
 import { Ideal } from './Ideal';
 import { stripeSys } from '../system/Stripe';
 import { elementSys } from '../system/Element';
+import { size } from '../property/Size';
+import { themeSys } from '../system/Theme';
 
-const fromContainer = style({
+const formContainer = style({
   width: "30vw",
   minWidth: "500px",
   alignSelf: "center",
   boxShadow: "0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07)",
-  borderRadius: "7px",
-  padding: "40px",
+  borderRadius: size.radius.lg,
+  padding: size.space.section,
+  backgroundColor: themeSys.state.bg2
 })
 
 const elementsMargin = style({
-  marginBottom: "24px",
-})
-
-const linkAuthMargin = style({
-  marginBottom: "48px",
+  marginBottom: size.space.xxl,
 })
 
 const CheckoutForm: Component = () => {
@@ -43,11 +42,11 @@ const CheckoutForm: Component = () => {
   //   For details, see src/components/PaymentElements.tsx
   return (
     <>
-      <form class={fromContainer} onSubmit={(event) => paymentSys.handleSubmit(event, stripeSys.stripe(), elementSys.elements())}>
+      <form class={formContainer} onSubmit={(event) => paymentSys.handleSubmit(event, stripeSys.stripe(), elementSys.elements())}>
         
           <ExpressCheckout class={elementsMargin} onConfirm={() => paymentSys.handleExpressCheckout(stripeSys.stripe(), elementSys.elements())} />
 
-          <LinkAuthenticationElement class={linkAuthMargin} defaultValues={ { email : 'foo@bar.com'} } />
+          <LinkAuthenticationElement class={elementsMargin} defaultValues={ { email : 'foo@bar.com'} } />
 
           <PaymentElement class={elementsMargin} />
 

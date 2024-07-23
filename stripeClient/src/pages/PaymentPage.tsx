@@ -4,10 +4,12 @@ import { style } from '@macaron-css/core';
 import { stripeSys } from '../system/Stripe';
 import CheckoutForm from '../components/CheckoutForm';
 import { elementSys } from '../system/Element';
+import { size } from '../property/Size';
+import { fonts } from '../property/Styles';
 
 const container = style({
-  fontFamily: "-apple-getSystemErrorMap, BlinkMacSystemFont, sans-serif",
-  fontSize: "16px",
+  fontFamily: fonts.page,
+  fontSize: size.fontSizes.sm,
   display: "flex",
   justifyContent: "center",
   alignContent: "center",
