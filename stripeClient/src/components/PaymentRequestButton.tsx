@@ -7,7 +7,8 @@ import type {
 import type { Component, Setter } from 'solid-js'
 import { createEffect, mergeProps, onCleanup } from 'solid-js'
 import type { ElementProps } from '../Types'
-import { useStripe, useStripeElements } from './Elements'
+import { stripeSys } from '../system/Stripe'
+import { elementSys } from '../system/Element'
 
 export type PaymentRequestButtonProps = ElementProps<'paymentRequestButton'>
 & Omit<StripePaymentRequestButtonElementOptions, 'paymentRequest'>
@@ -21,9 +22,6 @@ export type PaymentRequestButtonProps = ElementProps<'paymentRequestButton'>
 export const PaymentRequestButton: Component<PaymentRequestButtonProps> = (props) => {
   let wrapper!: HTMLDivElement
 
-  const stripe = useStripe()
-  const elements = useStripeElements()
-
   const merged = mergeProps(
     {
       classes: {},
@@ -33,12 +31,12 @@ export const PaymentRequestButton: Component<PaymentRequestButtonProps> = (props
   )
 
   createEffect(() => {
-    if (!stripe() && !elements())
+    if (!stripeSys.stripe() && !elementSys.elements())
       return
 
-    const paymentRequestObject = stripe()!.paymentRequest(props.paymentRequest)
+    const paymentRequestObject = stripeSys.stripe()!.paymentRequest(props.paymentRequest)
 
-    const element = elements()!.create('paymentRequestButton', {
+    const element = elementSys.elements()!.create('paymentRequestButton', {
       classes: merged.classes,
       style: {
         paymentRequestButton: merged.style as any,

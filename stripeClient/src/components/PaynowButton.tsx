@@ -1,7 +1,8 @@
 import type { Component } from 'solid-js';
 import { paymentSys } from '../system/Payment';
 import { keyframes, style } from '@macaron-css/core';
-import { useElements, useStripe } from './Elements';
+import { stripeSys } from '../system/Stripe';
+import { elementSys } from '../system/Element';
 
 const paynowButton = style({
     background: "#5469d4",
@@ -84,13 +85,8 @@ const paynowButton = style({
   })
 
 const PaynowButton: Component = () => {
-    // Access the Stripe & StripeElement objects provided from the <Elements>
-    // caution : ustStripe() and useElements() must be used in <Elements>
-    const stripe = useStripe()
-    const elements = useElements()
-
     return (
-        <button disabled={paymentSys.isLoading() || !stripe() || !elements()} class={paynowButton}>
+        <button disabled={paymentSys.isLoading() || !stripeSys.stripe() || !elementSys.elements()} class={paynowButton}>
             <span id="button-text">
                 {paymentSys.isLoading() ? <div class={paynowSpinner} id="spinner"></div> : "Pay now"}
             </span>

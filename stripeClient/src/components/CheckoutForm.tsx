@@ -1,7 +1,6 @@
 import type { Component } from 'solid-js';
-import { createEffect, createSignal, Show } from "solid-js";
+import { createEffect } from "solid-js";
 import { style } from '@macaron-css/core';
-import { useStripe, useElements } from './Elements';
 import { PaymentElement } from './PaymentElement';
 import { paymentSys } from '../system/Payment';
 import PaynowButton from './PaynowButton';
@@ -15,6 +14,7 @@ import { CardCvc } from './CardCvc';
 import { Iban } from './Iban';
 import { Ideal } from './Ideal';
 import { stripeSys } from '../system/Stripe';
+import { elementSys } from '../system/Element';
 
 const fromContainer = style({
   width: "30vw",
@@ -34,24 +34,18 @@ const linkAuthMargin = style({
 })
 
 const CheckoutForm: Component = () => {
-  // Access the Stripe & StripeElement objects provided from the <Elements>
-  // caution : ustStripe() and useElements() must be used in <Elements>
-  const stripe = useStripe(); 
-  const elements = useElements();
 
   // whenever the Signal stripe() is changed, shows redirection page and prints payment message
-  createEffect(() => {
-    paymentSys.redirect(stripe())
-  });
+  createEffect(() => paymentSys.redirect(stripeSys.stripe()));
 
   // <form> : When your customer clicks the pay button, call paymentSys.handleSubmit()
   // <PaymentElement> : embeds an iframe with a dynamic form that collects payment details for a variety of payment methods.
   //   For details, see src/components/PaymentElements.tsx
   return (
     <>
-      <form class={fromContainer} onSubmit={(event) => paymentSys.handleSubmit(event, stripe(), elements())}>
+      <form class={fromContainer} onSubmit={(event) => paymentSys.handleSubmit(event, stripeSys.stripe(), elementSys.elements())}>
         
-          <ExpressCheckout class={elementsMargin} onConfirm={() => paymentSys.handleExpressCheckout(stripe(), elements())} />
+          <ExpressCheckout class={elementsMargin} onConfirm={() => paymentSys.handleExpressCheckout(stripeSys.stripe(), elementSys.elements())} />
 
           <LinkAuthenticationElement class={linkAuthMargin} defaultValues={ { email : 'foo@bar.com'} } />
 

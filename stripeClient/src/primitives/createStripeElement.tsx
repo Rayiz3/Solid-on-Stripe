@@ -1,7 +1,7 @@
-import type { StripeElementType, StripeElementsOptions, StripeExpressCheckoutElement } from '@stripe/stripe-js'
+import type { StripeElementType, StripeElementsOptions } from '@stripe/stripe-js'
 import type { Accessor } from 'solid-js'
 import { createEffect, onCleanup } from 'solid-js'
-import { useStripeElements } from '../components/Elements'
+import { elementSys } from '../system/Element'
 
 type FixMe = Record<string, any>
 type NormalFn = () => StripeElementsOptions & FixMe
@@ -20,8 +20,6 @@ export function createStripeElement(
   elementsOptions: MaybeAccessor<StripeElementsOptions & FixMe> | NormalFn = {},
   cb?: (eventType: 'onChange' | 'onReady' | 'onFocus' | 'onBlur' | 'onEscape' | 'onConfirm', ev: any) => void,
 ) {
-  const elements = useStripeElements()
-
   createEffect(() => {
     const mountOn = (newElement: any) => {
       newElement.mount(access(node) as HTMLDivElement)
@@ -37,20 +35,18 @@ export function createStripeElement(
     
     // if the elements is expressCheckout, onConfirm event should be activated.
     if (elementType == 'expressCheckout') {
-      const newElement = elements()!.create(elementType, access(elementsOptions) as any)
+      const newElement = elementSys.elements()!.create(elementType, access(elementsOptions) as any)
       
       mountOn(newElement)
       newElement.on('confirm', e => cb?.('onConfirm', e))
     }
     // otherwise, onChange event should be activated.
     else {
-      const newElement = elements()!.create(elementType as any, access(elementsOptions) as any)
+      const newElement = elementSys.elements()!.create(elementType as any, access(elementsOptions) as any)
 
       mountOn(newElement)
       newElement.on('change', e => cb?.('onChange', e))
     }
 
   }, { defer: true })
-
-  return elements
 }
