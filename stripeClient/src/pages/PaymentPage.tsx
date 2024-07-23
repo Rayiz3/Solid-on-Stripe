@@ -3,6 +3,7 @@ import { createEffect, onMount, Show } from 'solid-js';
 import { style } from '@macaron-css/core';
 import { stripeSys } from '../system/Stripe';
 import CheckoutForm from '../components/CheckoutForm';
+import { elementSys } from '../system/Element';
 
 const container = style({
   fontFamily: "-apple-getSystemErrorMap, BlinkMacSystemFont, sans-serif",
