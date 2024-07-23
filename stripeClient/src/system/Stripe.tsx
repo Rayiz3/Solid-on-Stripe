@@ -36,8 +36,9 @@ class StripeSys {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(this.sampleData),
         }).then((res) => res.json())
+          .then((res) => res.clientSecret)
         
-        this.setClientSecret(res.clientSecret);
+        this.setClientSecret(res);
         
         elementSys.getElements()
     }
