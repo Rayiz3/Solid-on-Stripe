@@ -11,10 +11,10 @@ class ElementSys {
         ([this.elements, this.setElements] = createSignal<StripeElements | null>(null))
     }
 
-    // getElements : make element instance using client secret and apply style
-    getElements = async () => {
-        if(stripeSys.stripe() && !this.elements()){
-            const instance = await stripeSys.stripe()!.elements({
+    // getElements : make element instance using client secret and applied styles
+    getElements = () => {
+        if(stripeSys.stripe() && stripeSys.clientSecret() && !this.elements()){
+            const instance = stripeSys.stripe()!.elements({
                 clientSecret: stripeSys.clientSecret()!,
                 appearance: elementStyle,
             })

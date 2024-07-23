@@ -1,10 +1,9 @@
 import type { Component } from 'solid-js';
-import { onMount, Show } from 'solid-js';
+import { createEffect, onMount, Show } from 'solid-js';
 import { style } from '@macaron-css/core';
-import { Elements } from '../components/Elements';
-import { elementStyle } from '../property/Styles';
 import { stripeSys } from '../system/Stripe';
 import CheckoutForm from '../components/CheckoutForm';
+import { elementSys } from '../system/Element';
 
 const container = style({
   fontFamily: "-apple-getSystemErrorMap, BlinkMacSystemFont, sans-serif",
@@ -19,9 +18,10 @@ const container = style({
 
 const PaymentPage: Component = () => {
   // Make sure to call loadStripe only once to avoid recreating the Stripe object on every render.
-  onMount(() => {
-    stripeSys.initialize()
-  });
+  onMount(async () => await stripeSys.initialize());
+
+  // Make element instance when stripe object is generated.
+  createEffect(() => elementSys.getElements())
 
   // Pass the resulting promise from loadStripe & clientSecret to the <Elements> provider.
   // For details, see src/components/Elements.tsx
@@ -40,14 +40,7 @@ const PaymentPage: Component = () => {
   return (
     <div class={container}>
       <Show when={stripeSys.clientSecret()} fallback={<div>Loading stripe...</div>}>
-        <Elements stripe={stripeSys.stripe()}
-                  clientSecret={stripeSys.clientSecret()}
-                  theme={elementStyle.theme}
-                  variables={elementStyle.variables}
-                  rules={elementStyle.rules}
-                  labels={elementStyle.labels}>
-          <CheckoutForm />
-        </Elements>
+        <CheckoutForm />
       </Show>
     </div>
   );

@@ -26,21 +26,17 @@ class StripeSys {
     //     stripe - entrypoint to the rest of the Stripe.js SDK.
     //     client secret - string value that is used for user identification
     //     element - object for payment UI (payment element, express check, etc.)
-    initialize = async () => {
+    initialize = () => {
         // load Stripe from public key 
-        this.setStripe(await loadStripe(keys.publicAudai)!);
-
+        loadStripe(keys.publicAudai).then((res) => this.setStripe(res!))
+        
         // get client secret from server
-        const res = await fetch(links.requestToServer, {
+        fetch(links.requestToServer, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(this.sampleData),
         }).then((res) => res.json())
-          .then((res) => res.clientSecret)
-        
-        this.setClientSecret(res);
-        
-        elementSys.getElements()
+          .then((res) => this.setClientSecret(res.clientSecret))
     }
 }
 
