@@ -41,9 +41,9 @@ const CheckoutForm: Component = () => {
   //   For details, see src/components/PaymentElements.tsx
   return (
     <>
-      <form class={formContainer} onSubmit={(event) => paymentSys.handleSubmit(event, stripeSys.stripe(), stripeSys.elements())}>
+      <form class={formContainer} onSubmit={(event) => paymentSys.handleSubmit(event)}>
         
-          <ExpressCheckout class={elementsMargin} onConfirm={() => paymentSys.handleExpressCheckout(stripeSys.stripe(), stripeSys.elements())} />
+          <ExpressCheckout class={elementsMargin} onConfirm={() => paymentSys.handleExpressCheckout()} />
 
           <LinkAuthenticationElement class={elementsMargin} defaultValues={ { email : 'foo@bar.com'} } />
 

@@ -57,10 +57,10 @@ class PaymentSys {
     }
 
     // handleSubmit : handler for <PaymentElement> & <LinkAuthenticationElement>
-    handleSubmit = async (e: Event, stripe: Stripe | null, elements: StripeElements | null) => {
+    handleSubmit = async (e: Event) => {
         e.preventDefault();
 
-        if (!stripe || !elements) {
+        if (!stripeSys.stripe() || !stripeSys.elements()) {
             // Stripe.js hasn't yet loaded.
             // Make sure to disable form submission until Stripe.js has loaded.
             return;
@@ -69,8 +69,8 @@ class PaymentSys {
         this.setIsLoading(true);
     
         // call confirmPayment with the PaymentElement
-        const { error } = await stripe!.confirmPayment({
-          elements: elements!,
+        const { error } = await stripeSys.stripe()!.confirmPayment({
+          elements: stripeSys.elements()!,
           confirmParams: {
             // return_url indicates where Stripe redirects the user after they complete the payment.
             // Make sure to change this to your payment completion page
@@ -98,15 +98,15 @@ class PaymentSys {
     }
 
     // handExpressCheckout : handler for <ExpressCheckout>
-    handleExpressCheckout = async (stripe: Stripe | null, elements: StripeElements | null) => {
-        if (!stripe || !elements) {
+    handleExpressCheckout = async () => {
+        if (!stripeSys.stripe() || !stripeSys.elements()) {
             return;
         }
 
         this.setIsLoading(true);
 
-        const { error } = await stripe!.confirmPayment({
-            elements: elements!,
+        const { error } = await stripeSys.stripe()!.confirmPayment({
+            elements: stripeSys.elements()!,
             clientSecret: stripeSys.clientSecret(),
             confirmParams: {
                 return_url: links.redirection,
@@ -123,18 +123,18 @@ class PaymentSys {
     }
 
     // handleCardSubmit : handler for <CardNumber> & <CardExpiry> & <CardCvc>. I don't know why it does not work on <Card> :(
-    handleCardSubmit = async (e: Event, stripe: Stripe | null, elements: StripeElements | null) => {
+    handleCardSubmit = async (e: Event) => {
         e.preventDefault();
 
-        if (!stripe || !elements) {
+        if (!stripeSys.stripe() || !stripeSys.elements()) {
             return;
         }
 
         this.setIsLoading(true);
         
-        const { error } = await stripe!.confirmCardPayment(stripeSys.clientSecret(), {
+        const { error } = await stripeSys.stripe()!.confirmCardPayment(stripeSys.clientSecret(), {
             payment_method: {
-                card: elements!.getElement(CardNumber)!,
+                card: stripeSys.elements()!.getElement(CardNumber)!,
                 billing_details: {
                     // address : { city, country, line1, line2, postal_code, state }
                     // email : string | null
@@ -155,13 +155,13 @@ class PaymentSys {
     }
 
     // handlerSEPASubmit : handler for <Iban>. It requires billing_details: { name: string, email: string }
-    handleSEPASubmit = async (e: SubmitEvent, stripe: Stripe | null, elements: StripeElements | null) => {
+    handleSEPASubmit = async (e: SubmitEvent) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
 
-        const { error } = await stripe!.confirmSepaDebitPayment(stripeSys.clientSecret(), {
+        const { error } = await stripeSys.stripe()!.confirmSepaDebitPayment(stripeSys.clientSecret(), {
             payment_method: {
-                sepa_debit: elements!.getElement(Iban)!,
+                sepa_debit: stripeSys.elements()!.getElement(Iban)!,
                 billing_details: {
                     name: formData.get('name') as string,
                     email: formData.get('email') as string,
@@ -172,13 +172,13 @@ class PaymentSys {
     }
     
     // handlerIdealSubmit : handler for <Ideal>
-    handleIdealSubmit = async (e: SubmitEvent, stripe: Stripe | null, elements: StripeElements | null) => {
+    handleIdealSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement);
 
-        const { error } = await stripe!.confirmIdealPayment(stripeSys.clientSecret(), {
+        const { error } = await stripeSys.stripe()!.confirmIdealPayment(stripeSys.clientSecret(), {
             payment_method: {
-                ideal: elements!.getElement(Ideal)!
+                ideal: stripeSys.elements()!.getElement(Ideal)!
             },
             return_url: links.redirection,
         })
