@@ -1,8 +1,9 @@
-import { LayoutOption, StripeExpressCheckoutElementOptions } from "@stripe/stripe-js"
+import type { LayoutOption, StripeExpressCheckoutElementOptions, StripePaymentElementOptions, LayoutObject } from "@stripe/stripe-js"
+import { size } from "./Size"
 
 // *** Layout for PaymentElement *** //
 
-export const LayoutStylesPaymentElement = {
+export const LayoutStylesPaymentElement: { [style: string]: LayoutObject } = {
     tabs: {
         type: 'tabs',
         defaultCollapsed: false,
@@ -25,14 +26,15 @@ export const LayoutStylesPaymentElement = {
     },
 }
 
-export const optionsPaymentElement = {
+export const optionsPaymentElement: StripePaymentElementOptions = {
     // Specify the layout for the Payment Element.
     layout: LayoutStylesPaymentElement.tabs,
 
     // Payment methods that are specified in here are shown first, followed by any additional payment methods.
     // If there are payment method types that Stripe wouldn’t show, they’re ignored.
-    paymentMethodOrder: ['card', 'cash_app_pay', 'link']
+    paymentMethodOrder: ['card', 'cash_app_pay', 'link', 'afterPay']
 }
+
 
 // *** Layout for ExpressCheckout *** //
 
@@ -83,6 +85,10 @@ export const LayoutStylesExpressCheckout: {[name: string]: LayoutOption} = {
 
 export const optionExpressCheckout: StripeExpressCheckoutElementOptions = {
     layout: LayoutStylesExpressCheckout.sample,
+    wallets: {
+        applePay: 'always',
+        googlePay: 'always',
+    },
     paymentMethods: {
         amazonPay: 'auto',
         applePay: 'always',
@@ -90,13 +96,13 @@ export const optionExpressCheckout: StripeExpressCheckoutElementOptions = {
         link: 'auto',
         paypal: 'auto',
     },
-    paymentMethodOrder: ['link', 'paypal', 'googlePay', 'amazonPay'],
+    paymentMethodOrder: ['link', 'googlePay', 'applePay', 'amazonPay'],
     buttonType: {
         googlePay: 'checkout',
-        applePay: 'check-out'
+        applePay: 'check-out',
     },
     buttonTheme: {
-        applePay: 'white-outline'
+        applePay: 'white-outline',
     },
-    buttonHeight: 40 // defaults : 44px
+    buttonHeight: size.button.lg // defaults : 44px
 }
