@@ -1,7 +1,7 @@
 import type { StripeElementType, StripeElementsOptions } from '@stripe/stripe-js'
 import type { Accessor } from 'solid-js'
 import { createEffect, onCleanup } from 'solid-js'
-import { elementSys } from '../system/Element'
+import { stripeSys } from '../system/Stripe'
 
 type FixMe = Record<string, any>
 type NormalFn = () => StripeElementsOptions & FixMe
@@ -35,14 +35,14 @@ export function createStripeElement(
     
     // if the elements is expressCheckout, onConfirm event should be activated.
     if (elementType == 'expressCheckout') {
-      const newElement = elementSys.elements()!.create(elementType, access(elementsOptions) as any)
+      const newElement = stripeSys.elements()!.create(elementType, access(elementsOptions) as any)
       
       mountOn(newElement)
       newElement.on('confirm', e => cb?.('onConfirm', e))
     }
     // otherwise, onChange event should be activated.
     else {
-      const newElement = elementSys.elements()!.create(elementType as any, access(elementsOptions) as any)
+      const newElement = stripeSys.elements()!.create(elementType as any, access(elementsOptions) as any)
 
       mountOn(newElement)
       newElement.on('change', e => cb?.('onChange', e))

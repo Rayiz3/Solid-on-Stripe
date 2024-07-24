@@ -2,7 +2,6 @@ import type { Component } from 'solid-js';
 import { paymentSys } from '../system/Payment';
 import { keyframes, style } from '@macaron-css/core';
 import { stripeSys } from '../system/Stripe';
-import { elementSys } from '../system/Element';
 import { themeSys } from '../system/Theme';
 import { fonts } from '../property/Styles';
 import { size } from '../property/Size';
@@ -95,7 +94,7 @@ const paynowButton = style({
 
 const PaynowButton: Component = () => {
     return (
-        <button disabled={paymentSys.isLoading() || !stripeSys.stripe() || !elementSys.elements()} class={paynowButton}>
+        <button disabled={paymentSys.isLoading() || !stripeSys.stripe() || !stripeSys.elements()} class={paynowButton}>
             <span id="button-text">
                 {paymentSys.isLoading() ? <div class={paynowSpinner} id="spinner"></div> : "Pay now"}
             </span>

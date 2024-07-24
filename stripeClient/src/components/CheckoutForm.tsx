@@ -14,7 +14,6 @@ import { CardCvc } from './CardCvc';
 import { Iban } from './Iban';
 import { Ideal } from './Ideal';
 import { stripeSys } from '../system/Stripe';
-import { elementSys } from '../system/Element';
 import { size } from '../property/Size';
 import { themeSys } from '../system/Theme';
 
@@ -42,9 +41,9 @@ const CheckoutForm: Component = () => {
   //   For details, see src/components/PaymentElements.tsx
   return (
     <>
-      <form class={formContainer} onSubmit={(event) => paymentSys.handleSubmit(event, stripeSys.stripe(), elementSys.elements())}>
+      <form class={formContainer} onSubmit={(event) => paymentSys.handleSubmit(event, stripeSys.stripe(), stripeSys.elements())}>
         
-          <ExpressCheckout class={elementsMargin} onConfirm={() => paymentSys.handleExpressCheckout(stripeSys.stripe(), elementSys.elements())} />
+          <ExpressCheckout class={elementsMargin} onConfirm={() => paymentSys.handleExpressCheckout(stripeSys.stripe(), stripeSys.elements())} />
 
           <LinkAuthenticationElement class={elementsMargin} defaultValues={ { email : 'foo@bar.com'} } />
 

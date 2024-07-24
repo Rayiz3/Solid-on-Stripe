@@ -3,7 +3,6 @@ import { createEffect, onMount, Show } from 'solid-js';
 import { style } from '@macaron-css/core';
 import { stripeSys } from '../system/Stripe';
 import CheckoutForm from '../components/CheckoutForm';
-import { elementSys } from '../system/Element';
 import { size } from '../property/Size';
 import { fonts } from '../property/Styles';
 
@@ -23,7 +22,7 @@ const PaymentPage: Component = () => {
   onMount(async () => await stripeSys.initialize());
 
   // Make element instance when stripe object is generated.
-  createEffect(() => elementSys.getElements())
+  createEffect(() => stripeSys.getElements())
 
   // Pass the resulting promise from loadStripe & clientSecret to the <Elements> provider.
   // For details, see src/components/Elements.tsx
