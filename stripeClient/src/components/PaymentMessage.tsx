@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 import { Show } from 'solid-js';
-import { paymentSys } from '../system/Payment';
 import { style } from '@macaron-css/core';
+import { paymentSys } from '../system/Payment';
 
 const redirectMessage = style({
   color: "rgb(105, 115, 134)",

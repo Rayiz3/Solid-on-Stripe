@@ -1,5 +1,5 @@
-import type { StripeLinkAuthenticationElementChangeEvent, StripeLinkAuthenticationElementOptions } from '@stripe/stripe-js'
 import type { Component } from 'solid-js'
+import type { StripeLinkAuthenticationElementChangeEvent, StripeLinkAuthenticationElementOptions } from '@stripe/stripe-js'
 import { createWrapper } from '../primitives/createWrapper'
 import { createStripeElement } from '../primitives/createStripeElement'
 import type { ElementProps } from '../Types'
@@ -9,7 +9,7 @@ export type LinkAuthenticationElementProps = ElementProps<'linkAuthentication', 
 }
 
 // e-mail form for Link authentication
-export const LinkAuthenticationElement: Component<LinkAuthenticationElementProps> = (props) => {
+const LinkAuthenticationElement: Component<LinkAuthenticationElementProps> = (props: LinkAuthenticationElementProps) => {
   const [wrapper, setWrapper] = createWrapper()
 
   const options = () => props.defaultValues ? { defaultValues: props.defaultValues } : {}
@@ -25,3 +25,5 @@ export const LinkAuthenticationElement: Component<LinkAuthenticationElementProps
 
   return <div class={props.class} ref={setWrapper} />
 }
+
+export default LinkAuthenticationElement

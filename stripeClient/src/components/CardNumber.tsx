@@ -8,7 +8,7 @@ import type { ElementProps } from '../Types'
 export type CardNumberElementProps = ElementProps<'cardNumber', stripeJs.StripeCardNumberElementChangeEvent> & stripeJs.StripeCardNumberElementOptions
 
 // textbox for card number
-export const CardNumber: Component<CardNumberElementProps> = (props) => {
+const CardNumber: Component<CardNumberElementProps> = (props: CardNumberElementProps) => {
   const [wrapper, setWrapper] = createWrapper()
 
   const defaultValues = {
@@ -33,3 +33,5 @@ export const CardNumber: Component<CardNumberElementProps> = (props) => {
 
   return <div class={props.class} ref={setWrapper} />
 }
+
+export default CardNumber

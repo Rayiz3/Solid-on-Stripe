@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
-import { paymentSys } from '../system/Payment';
 import { keyframes, style } from '@macaron-css/core';
+import { paymentSys } from '../system/Payment';
 import { stripeSys } from '../system/Stripe';
 import { themeSys } from '../system/Theme';
 import { fonts } from '../property/Styles';
@@ -102,4 +102,4 @@ const PaynowButton: Component = () => {
     )
 }
 
-export default PaynowButton;
+export default PaynowButton

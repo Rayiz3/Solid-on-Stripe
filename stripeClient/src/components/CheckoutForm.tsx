@@ -1,21 +1,20 @@
 import type { Component } from 'solid-js';
 import { createEffect } from "solid-js";
 import { style } from '@macaron-css/core';
-import { PaymentElement } from './PaymentElement';
-import { paymentSys } from '../system/Payment';
-import PaynowButton from './PaynowButton';
-import { ExpressCheckout } from './ExpressCheckout';
-import { LinkAuthenticationElement } from './LinkAuthenticationElement';
-import { Address } from './Address';
-import { Card } from './Card';
-import { CardNumber } from './CardNumber';
-import { CardExpiry } from './CardExpiry';
-import { CardCvc } from './CardCvc';
-import { Iban } from './Iban';
-import { Ideal } from './Ideal';
-import { stripeSys } from '../system/Stripe';
 import { size } from '../property/Size';
+import { paymentSys } from '../system/Payment';
 import { themeSys } from '../system/Theme';
+import PaynowButton from './PaynowButton';
+import PaymentElement from './PaymentElement';
+import ExpressCheckout from './ExpressCheckout';
+import LinkAuthenticationElement from './LinkAuthenticationElement';
+import Address from './Address';
+import Card from './Card';
+import CardNumber from './CardNumber';
+import CardExpiry from './CardExpiry';
+import CardCvc from './CardCvc';
+import Iban from './Iban';
+import Ideal from './Ideal';
 
 const formContainer = style({
   width: "30vw",
@@ -34,7 +33,7 @@ const elementsMargin = style({
 const CheckoutForm: Component = () => {
 
   // whenever the Signal stripe() is changed, shows redirection page and prints payment message
-  createEffect(() => paymentSys.redirect(stripeSys.stripe()));
+  createEffect(() => paymentSys.redirect());
 
   // <form> : When your customer clicks the pay button, call paymentSys.handleSubmit()
   // <PaymentElement> : embeds an iframe with a dynamic form that collects payment details for a variety of payment methods.

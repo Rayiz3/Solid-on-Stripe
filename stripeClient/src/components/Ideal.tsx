@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js'
-import { mergeProps, splitProps } from 'solid-js'
 import type { StripeIdealBankElementOptions } from '@stripe/stripe-js'
+import { mergeProps, splitProps } from 'solid-js'
 import { createWrapper } from '../primitives/createWrapper'
 import { createStripeElement } from '../primitives/createStripeElement'
 import type { ElementProps } from '../Types'
@@ -8,7 +8,7 @@ import type { ElementProps } from '../Types'
 export type IdealBankElementProps = ElementProps<'idealBank'> & StripeIdealBankElementOptions
 
 // for iDEAL payments
-export const Ideal: Component<IdealBankElementProps> = (props) => {
+const Ideal: Component<IdealBankElementProps> = (props: IdealBankElementProps) => {
   const [wrapper, setWrapper] = createWrapper()
 
   const defaultValues = {
@@ -32,3 +32,5 @@ export const Ideal: Component<IdealBankElementProps> = (props) => {
 
   return <div class={props.class} ref={setWrapper} />
 }
+
+export default Ideal

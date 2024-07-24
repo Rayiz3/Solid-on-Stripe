@@ -1,5 +1,5 @@
-import type { StripeAddressElementChangeEvent, StripeAddressElementOptions } from '@stripe/stripe-js'
 import type { Component } from 'solid-js'
+import type { StripeAddressElementChangeEvent, StripeAddressElementOptions } from '@stripe/stripe-js'
 import { mergeProps, splitProps } from 'solid-js'
 import type { ElementProps } from '../Types'
 import { createWrapper } from '../primitives/createWrapper'
@@ -15,7 +15,7 @@ export type AddressProps = ElementProps<'address', StripeAddressElementChangeEve
 //   contacts?
 //   ...
 // for details, see node_modules/@stripe/stripe-js/dist/stripe-js/elements/address.d.ts
-export const Address: Component<AddressProps> = (props) => {
+const Address: Component<AddressProps> = (props: AddressProps) => {
   const [wrapper, setWrapper] = createWrapper()
 
   const defaultValues = {
@@ -42,3 +42,5 @@ export const Address: Component<AddressProps> = (props) => {
 
   return <div class={props.class} ref={setWrapper} />
 }
+
+export default Address

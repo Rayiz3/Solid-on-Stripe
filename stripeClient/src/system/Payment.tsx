@@ -1,11 +1,10 @@
 import { createSignal, Accessor, Setter } from 'solid-js';
-import { Stripe, StripeElements, StripeExpressCheckoutElementConfirmEvent } from '@stripe/stripe-js';
 import { stripeSys } from './Stripe';
-import { CardNumber } from '../components/CardNumber';
-import { CardCvc } from '../components/CardCvc';
-import { Iban } from '../components/Iban';
-import { Ideal } from '../components/Ideal';
 import { links } from '../property/Links';
+import CardNumber from '../components/CardNumber';
+import CardCvc from '../components/CardCvc';
+import Iban from '../components/Iban';
+import Ideal from '../components/Ideal';
 
 class PaymentSys {
     message: Accessor<string | null>
@@ -19,8 +18,8 @@ class PaymentSys {
     }
 
     // redirect : whenever the Signal stripe() is changed, shows redirection page and prints payment message
-    redirect(stripe: Stripe | null){
-        if (!stripe){
+    redirect(){
+        if (!stripeSys.stripe()){
             return
         }
         
@@ -37,7 +36,7 @@ class PaymentSys {
 
         // Use" payment_intent_client_secret" to retrieve the PaymentIntent status update
         // and determine what to show to the customer.
-        stripe!.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+        stripeSys.stripe()!.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
             switch (paymentIntent!.status) {
             case "succeeded":
                 this.setMessage("Payment succeeded!");

@@ -8,7 +8,7 @@ import { optionsPaymentElement } from '../property/LayoutOptions'
 export type PaymentElementProps = ElementProps<'payment', StripePaymentElementChangeEvent & { error: undefined }>
 
 // payment method, card number, expiry, CVC and nation forms for payment
-export const PaymentElement: Component<PaymentElementProps> = (props) => {
+const PaymentElement: Component<PaymentElementProps> = (props: PaymentElementProps) => {
     const [wrapper, setWrapper] = createWrapper()
 
     createStripeElement(
@@ -22,3 +22,5 @@ export const PaymentElement: Component<PaymentElementProps> = (props) => {
 
     return <div class={props.class} ref={setWrapper} />
 }
+
+export default PaymentElement

@@ -1,5 +1,5 @@
-import type * as stripeJs from '@stripe/stripe-js'
 import type { Component } from 'solid-js'
+import type * as stripeJs from '@stripe/stripe-js'
 import { mergeProps, splitProps } from 'solid-js'
 import { createWrapper } from '../primitives/createWrapper'
 import { createStripeElement } from '../primitives/createStripeElement'
@@ -8,7 +8,7 @@ import type { ElementProps } from '../Types'
 export type CardElementProps = ElementProps<'card', stripeJs.StripeCardElementChangeEvent> & stripeJs.StripeCardElementOptions
 
 // textboxes for card information forms (number, expiry, cvc)
-export const Card: Component<CardElementProps> = (props) => {
+const Card: Component<CardElementProps> = (props: CardElementProps) => {
   const [wrapper, setWrapper] = createWrapper()
 
   const defaultValues = {
@@ -34,3 +34,5 @@ export const Card: Component<CardElementProps> = (props) => {
 
   return <div class={props.class} ref={setWrapper} />
 }
+
+export default Card

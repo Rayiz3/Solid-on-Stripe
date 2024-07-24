@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js'
-import { mergeProps, splitProps } from 'solid-js'
 import type { StripeIbanElementChangeEvent, StripeIbanElementOptions } from '@stripe/stripe-js'
+import { mergeProps, splitProps } from 'solid-js'
 import { createWrapper } from '../primitives/createWrapper'
 import { createStripeElement } from '../primitives/createStripeElement'
 import type { ElementProps } from '../Types'
@@ -8,7 +8,7 @@ import type { ElementProps } from '../Types'
 export type IbanElementProps = ElementProps<'iban', StripeIbanElementChangeEvent> & StripeIbanElementOptions
 
 // for SEPA payments
-export const Iban: Component<IbanElementProps> = (props) => {
+const Iban: Component<IbanElementProps> = (props: IbanElementProps) => {
   const [wrapper, setWrapper] = createWrapper()
 
   const defaultValues = {
@@ -37,3 +37,5 @@ export const Iban: Component<IbanElementProps> = (props) => {
     </>
   )
 }
+
+export default Iban

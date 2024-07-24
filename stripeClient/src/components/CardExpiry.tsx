@@ -1,5 +1,5 @@
-import type { StripeCardExpiryElementChangeEvent, StripeCardExpiryElementOptions } from '@stripe/stripe-js'
 import type { Component } from 'solid-js'
+import type { StripeCardExpiryElementChangeEvent, StripeCardExpiryElementOptions } from '@stripe/stripe-js'
 import { mergeProps, splitProps } from 'solid-js'
 import { createWrapper } from '../primitives/createWrapper'
 import { createStripeElement } from '../primitives/createStripeElement'
@@ -8,7 +8,7 @@ import type { ElementProps } from '../Types'
 export type CardExpiryElementProps = ElementProps<'cardExpiry', StripeCardExpiryElementChangeEvent> & StripeCardExpiryElementOptions
 
 // textbox for card expiry
-export const CardExpiry: Component<CardExpiryElementProps> = (props) => {
+const CardExpiry: Component<CardExpiryElementProps> = (props: CardExpiryElementProps) => {
   const [wrapper, setWrapper] = createWrapper()
 
   const defaultValues = {
@@ -31,3 +31,5 @@ export const CardExpiry: Component<CardExpiryElementProps> = (props) => {
 
   return <div class={props.class} ref={setWrapper} />
 }
+
+export default CardExpiry

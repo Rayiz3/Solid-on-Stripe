@@ -1,5 +1,5 @@
-import type { StripeCardCvcElementChangeEvent, StripeCardCvcElementOptions } from '@stripe/stripe-js'
 import type { Component } from 'solid-js'
+import type { StripeCardCvcElementChangeEvent, StripeCardCvcElementOptions } from '@stripe/stripe-js'
 import { mergeProps, splitProps } from 'solid-js'
 import { createWrapper } from '../primitives/createWrapper'
 import { createStripeElement } from '../primitives/createStripeElement'
@@ -8,7 +8,7 @@ import type { ElementProps } from '../Types'
 export type CardCvcElementProps = ElementProps<'cardCvc', StripeCardCvcElementChangeEvent> & StripeCardCvcElementOptions
 
 // textbox for card cvc
-export const CardCvc: Component<CardCvcElementProps> = (props) => {
+const CardCvc: Component<CardCvcElementProps> = (props: CardCvcElementProps) => {
   const [wrapper, setWrapper] = createWrapper()
 
   const defaultValues = {
@@ -31,3 +31,5 @@ export const CardCvc: Component<CardCvcElementProps> = (props) => {
 
   return <div class={props.class} ref={setWrapper} />
 }
+
+export default CardCvc
