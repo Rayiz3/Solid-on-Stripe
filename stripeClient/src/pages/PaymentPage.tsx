@@ -2,18 +2,20 @@ import type { Component } from 'solid-js';
 import { onMount, Show } from 'solid-js';
 import { style } from '@macaron-css/core';
 
-import { stripeSys } from '../system/Stripe';
 import { size } from '../property/Size';
 import { fonts } from '../property/Styles';
-import CheckoutForm from '../components/CheckoutForm';
+import { stripeSys } from '../system/Stripe';
 import { themeSys } from '../system/Theme';
+import CheckoutForm from '../components/CheckoutForm';
+import Goback from '../components/Goback';
 
 const container = style({
   fontFamily: fonts.page,
   fontSize: size.fontSizes.sm,
   display: "flex",
+  flexDirection: "column",
   justifyContent: "center",
-  alignContent: "center",
+  alignItems: "center",
   height: "100vh",
   width: "100vw",
   WebkitFontSmoothing: "antialiased",
@@ -31,6 +33,7 @@ const PaymentPage: Component = () => {
       <Show when={stripeSys.clientSecret()} fallback={<div>Loading stripe...</div>}>
         <CheckoutForm />
       </Show>
+      <Goback />
     </div>
   );
 };
