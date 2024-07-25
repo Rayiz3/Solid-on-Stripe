@@ -77,7 +77,7 @@ class PaymentSys {
             // For payments that require authentication, Stripe displays a modal for 3D Secure authentication
             // or redirects the customer to an authentication page, depending on the payment method.
             // After the customer completes the authentication process, they’re redirected to the return_url.
-            return_url: links.redirection,
+            return_url: links.localhost + '/redirection',
             // more about confirmParams : https://docs.stripe.com/js/payment_intents/confirm_payment
           },
         });
@@ -108,7 +108,7 @@ class PaymentSys {
             elements: stripeSys.elements()!,
             clientSecret: stripeSys.clientSecret(),
             confirmParams: {
-                return_url: links.redirection,
+                return_url: links.localhost + '/redirection',
             }
         })
 
@@ -142,7 +142,7 @@ class PaymentSys {
                 },
                 // more about payment_method : https://docs.stripe.com/api/payment_methods
             },
-            return_url: links.redirection,
+            return_url: links.localhost + '/redirection',
             // more about confirmCardPayment : https://docs.stripe.com/js/payment_intents/confirm_card_payment
         })
 
@@ -166,7 +166,7 @@ class PaymentSys {
                     email: formData.get('email') as string,
                 }
             },
-            return_url: links.redirection,
+            return_url: links.localhost + '/redirection',
         })
     }
     
@@ -179,7 +179,7 @@ class PaymentSys {
             payment_method: {
                 ideal: stripeSys.elements()!.getElement(Ideal)!
             },
-            return_url: links.redirection,
+            return_url: links.localhost + '/redirection',
         })
     }
 }
