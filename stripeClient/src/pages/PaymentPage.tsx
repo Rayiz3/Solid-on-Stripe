@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import { createEffect, onMount, Show } from 'solid-js';
+import { onMount, Show } from 'solid-js';
 import { style } from '@macaron-css/core';
 
 import { stripeSys } from '../system/Stripe';
@@ -25,8 +25,6 @@ const container = style({
 const PaymentPage: Component = () => {
   // Make sure to call loadStripe only once to avoid recreating the Stripe object on every render.
   onMount(async () => stripeSys.initialize());
-
-  // Make element instance when stripe object is generated.
 
   return (
     <div class={container}>

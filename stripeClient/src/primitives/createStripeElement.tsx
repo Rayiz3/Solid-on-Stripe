@@ -33,6 +33,9 @@ export function createStripeElement(
       onCleanup(() => newElement.unmount())
     }
     
+    if (!stripeSys.elements()){
+      return;
+    }
     // if the elements is expressCheckout, onConfirm event should be activated.
     if (elementType == 'expressCheckout') {
       const newElement = stripeSys.elements()!.create(elementType, access(elementsOptions) as any)
