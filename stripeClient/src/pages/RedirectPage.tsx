@@ -1,6 +1,5 @@
-import { Component, onMount } from 'solid-js'
+import { Component } from 'solid-js'
 import { style } from '@macaron-css/core';
-import RedirectMessage from '../components/PaymentMessage'
 
 const redirectMessage = style({
     color: "rgb(105, 115, 134)",

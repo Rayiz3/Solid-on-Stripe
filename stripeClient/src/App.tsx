@@ -1,4 +1,4 @@
-import { Component, onMount } from 'solid-js'
+import { Component } from 'solid-js'
 import { Route, Router } from '@solidjs/router'
 import { MetaProvider } from '@solidjs/meta'
 
