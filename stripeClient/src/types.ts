@@ -4,7 +4,6 @@ import type { CardElementProps } from './components/Card'
 import type { CardCvcElementProps } from './components/CardCvc'
 import type { CardExpiryElementProps } from './components/CardExpiry'
 import type { CardNumberElementProps } from './components/CardNumber'
-import type { PaymentRequestButtonProps } from './components/PaymentRequestButton'
 import type { IdealBankElementProps } from './components/Ideal'
 import type { LinkAuthenticationElementProps } from './components/LinkAuthenticationElement'
 import type { PaymentElementProps } from './components/PaymentElement'
@@ -32,7 +31,6 @@ declare module '@stripe/stripe-js' {
     getElement(elementType: Component<CardNumberElementProps>): stripeJs.StripeCardNumberElement | null
     getElement(elementType: Component<CardExpiryElementProps>): stripeJs.StripeCardExpiryElement | null
     getElement(elementType: Component<CardCvcElementProps>): stripeJs.StripeCardCvcElement | null
-    getElement(elementType: Component<PaymentRequestButtonProps>): stripeJs.StripePaymentRequestButtonElement | null
     getElement(elementType: Component<LinkAuthenticationElementProps>): stripeJs.StripeLinkAuthenticationElement | null
     getElement(elementType: Component<IdealBankElementProps>): stripeJs.StripeIdealBankElement | null
     getElement(elementType: Component<IbanElementProps>): stripeJs.StripeIbanElement | null
