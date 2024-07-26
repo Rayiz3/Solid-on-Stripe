@@ -16,6 +16,7 @@ app = Flask(__name__, static_folder='public',
 CORS(app)
 
 SERVER_DOMAIN = 'http://localhost:4242'
+CLIENT_DOMAIN = 'http://localhost:3000'
 
 def calculate_order_amount(items): # items : { id: "..." } []
     # Replace this constant with a calculation of the order's amount
@@ -65,14 +66,28 @@ def create_checkout_session():
                 },
             ],
             mode='subscription',  # this is subscription
-            success_url=SERVER_DOMAIN + '?success=true&session_id={CHECKOUT_SESSION_ID}',
-            cancel_url=SERVER_DOMAIN + '?canceled=true',
+            success_url=CLIENT_DOMAIN + '/subscribeCode?success=true&session_id={CHECKOUT_SESSION_ID}', # when payment success
+            cancel_url=CLIENT_DOMAIN + '/subscribeCode?canceled=true', # when user go back to previous page
         )
         return redirect(checkout_session.url, code=303)
     
     except Exception as e:
         print(e)
         return "Server error", 500
+
+
+@app.route('/create-portal-session', methods=['POST'])
+def create_portal_session():
+        # For demonstration purposes, we're using the Checkout session to retrieve the customer ID.
+        # Typically this is stored alongside the authenticated user in your database.
+        checkout_session_id = request.form.get('session_id')
+        checkout_session = stripe.checkout.Session.retrieve(checkout_session_id)
+
+        portalSession = stripe.billing_portal.Session.create(
+            customer=checkout_session.customer,
+            return_url=CLIENT_DOMAIN,
+        )
+        return redirect(portalSession.url, code=303)
 
 @app.route('/')
 def serve_index():
