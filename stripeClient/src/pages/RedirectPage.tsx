@@ -1,39 +1,50 @@
 import type { Component } from 'solid-js'
 import { Match, Switch } from 'solid-js';
+import { useLocation } from '@solidjs/router';
 
 import { style } from '@macaron-css/core';
 import { links } from '../property/Links';
 import { size } from '../property/Size';
 import { themeSys } from '../system/Theme';
+import Goback from '../components/Goback';
 
-interface pageFromType {
-  pageFrom: 'payment' | 'subscriptionCode' | 'subscriptionDashboard'
-  sessionId?: string
-}
+type pageFromType = 'payment' | 'subscriptionCode' | 'subscriptionDashboard'
 
-const redirectMessage = style({
+const container = style({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    backgroundColor: themeSys.state.bg1,
+
+    width: '100vw',
+    height: '100vh',
+
     color: themeSys.state.text,
     fontSize: "16px",
     lineHeight: "20px",
     paddingTop: "12px",
     textAlign: "center",
+})
 
-    margin: size.space.section,
-  })
+const RedirectPage: Component = () => {
+  const location = useLocation()
+  const state = location.state as {sessionId: string, pageFrom: pageFromType}
 
-const RedirectPage: Component<pageFromType> = (props: pageFromType) => {
   return (
-    <>
-      <div class={redirectMessage}>Payment succeeded!</div>
+    <div class={container}>
+      <div>Payment succeeded!</div>
       <Switch>
-        <Match when={props.pageFrom === 'subscriptionCode'}>
+        <Match when={state.pageFrom === 'subscriptionCode'}>
           <form class="getPortal" action={links.serverAddress + "/create-portal-session"} method="post">
-            <input type="hidden" name="session_id" value={props.sessionId}/>
+            <input type="hidden" name="session_id" value={state.sessionId}/>
             <button type="submit"> Manage your billing information </button>
           </form>
         </Match>
       </Switch>
-    </>
+      <Goback/>
+    </div>
   )
 }
 
