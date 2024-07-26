@@ -28,18 +28,48 @@ const container = style({
     textAlign: "center",
 })
 
+const message = style({
+    fontWeight: size.fontWeight.normal,
+    fontSize: size.fontSizes.xs,
+    lineHeight: size.fontSizes.md,
+    color: themeSys.state.text,
+
+    margin: size.space.section,
+})
+
+const portalButton = style({
+  width: size.button.long,
+  height: size.button.lg,
+  background: themeSys.state.primary1,
+
+  color: themeSys.state.bg1,
+  fontSize: size.fontSizes.xxs,
+  fontWeight: size.fontWeight.semiBold,
+
+  transition: size.transition.fast,
+  boxShadow: '0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)',
+  borderRadius: size.radius.sm,
+  border: 'none',
+
+  cursor: 'pointer',
+
+  ':hover': {
+      filter: 'brightness(1.12)',
+  }
+})
+
 const RedirectPage: Component = () => {
   const location = useLocation()
   const state = location.state as {sessionId: string, pageFrom: pageFromType}
 
   return (
     <div class={container}>
-      <div>Payment succeeded!</div>
+      <div class={message}>Payment succeeded!</div>
       <Switch>
         <Match when={state.pageFrom === 'subscriptionCode'}>
           <form class="getPortal" action={links.serverAddress + "/create-portal-session"} method="post">
             <input type="hidden" name="session_id" value={state.sessionId}/>
-            <button type="submit"> Manage your billing information </button>
+            <button class={portalButton} type="submit"> Manage your billing information </button>
           </form>
         </Match>
       </Switch>

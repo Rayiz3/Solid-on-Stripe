@@ -13,7 +13,7 @@ const goback = style({
     lineHeight: size.fontSizes.xxs,
 
     border: 'none',
-    borderRadius: size.radius.xs,
+    borderRadius: size.radius.sm,
 
     width: 100,
     height: 50,
