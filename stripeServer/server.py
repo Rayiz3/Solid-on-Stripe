@@ -5,28 +5,17 @@ Python 3.6 or newer required.
 import json
 import stripe
 
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, redirect, jsonify, request, send_from_directory
 from flask_cors import CORS
 
-stripe.api_key = 'sk_test_51P6R0zG1Ea829cAu8IqrZlWChn6ABEt9BuuYpNwhbdFZQWrb1KhIXXXTJe0tr6gtBVQ8pw2qzCoNWw4VOctLVHkV00rMUCPnVn'
+stripe.api_key = "sk_test_51P6R0zG1Ea829cAu8IqrZlWChn6ABEt9BuuYpNwhbdFZQWrb1KhIXXXTJe0tr6gtBVQ8pw2qzCoNWw4VOctLVHkV00rMUCPnVn"
 
 app = Flask(__name__, static_folder='public',
             static_url_path='', template_folder='public')
 
 CORS(app)
 
-csp_config = {
-    'default-src': '\'self\' http://localhost:3000',
-    'connect-src': [
-        '\'self\'',
-        'http://localhost:3000',
-        'https://apay-us.integ.amazon.com'
-    ]
-}
-
-def generateCspHeader():
-    header = '; '.join([f"{key} {' '.join(value) if isinstance(value, list) else value}" for key, value in csp_config.items()])
-    return header
+SERVER_DOMAIN = 'http://localhost:4242'
 
 def calculate_order_amount(items): # items : { id: "..." } []
     # Replace this constant with a calculation of the order's amount
@@ -36,6 +25,7 @@ def calculate_order_amount(items): # items : { id: "..." } []
     # USD is two-decimal: 10$ == 1000
     return 1000
 
+# create payment : make one-time-pay intent
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment():
     try:
@@ -55,6 +45,34 @@ def create_payment():
     
     except Exception as e:
         return jsonify(error=str(e)), 403
+
+# create checkout session : make checkout session for subscription
+@app.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    try:
+         # lookup_keys : Only return the price with these lookup_keys, if any exist.
+         # You can specify up to 10 lookup_keys.
+        prices = stripe.Price.list(
+            lookup_keys=[request.form['lookup_key']],
+            expand=['data.product']
+        )
+
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    'price': prices.data[0].id,
+                    'quantity': 1,
+                },
+            ],
+            mode='subscription',  # this is subscription
+            success_url=SERVER_DOMAIN + '?success=true&session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=SERVER_DOMAIN + '?canceled=true',
+        )
+        return redirect(checkout_session.url, code=303)
+    
+    except Exception as e:
+        print(e)
+        return "Server error", 500
 
 @app.route('/')
 def serve_index():
