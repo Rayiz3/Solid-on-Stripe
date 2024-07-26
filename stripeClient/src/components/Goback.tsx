@@ -20,6 +20,8 @@ const goback = style({
 
     margin: size.space.xl,
 
+    cursor: "pointer",
+
     ":hover": {
         filter: 'brightness(1.12)',
     }
