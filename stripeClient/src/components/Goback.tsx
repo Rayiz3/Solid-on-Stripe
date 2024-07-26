@@ -30,3 +30,5 @@ const Goback: Component = () => {
         <button class={goback} onClick={() => window.location.href = links.localhost}>go back</button>
     )
 }
+
+export default Goback
