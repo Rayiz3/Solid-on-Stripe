@@ -13,6 +13,7 @@ const Pages = () => {
     <>
       <Route path="/" component={SelectionPage} />
       <Route path="/redirection" component={RedirectPage} />
+      <Route path="/payment" component={PaymentPage} />
       <Route path="/paymentCode" component={PaymentCodePage} />
       <Route path="/paymentDashboard" component={PaymentDashboardPage} />
       <Route path="/subscribeCode" component={SubscriptionCodePage} />

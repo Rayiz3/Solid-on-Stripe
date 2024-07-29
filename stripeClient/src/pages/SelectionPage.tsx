@@ -36,6 +36,7 @@ const selectionButton = style({
 const SelectionPage: Component = () => {
     return (
         <div class={container}>
+            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/payment"}>One-time payment (payment element)</button>
             <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/paymentCode"}>One-time payment (code)</button>
             <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/paymentDashboard"}>One-time payment (dashboard)</button>
             <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/subscribeCode"}>Subscription (code)</button>
