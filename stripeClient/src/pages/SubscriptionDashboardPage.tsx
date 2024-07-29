@@ -22,7 +22,7 @@ const container = style({
 const SubscriptionDashboardPage: Component = () => {
     return(
         <div class={container}>
-            <PricingTable/>
+            <PricingTable payType="subscribe"/>
             <Goback />
         </div>
     )
