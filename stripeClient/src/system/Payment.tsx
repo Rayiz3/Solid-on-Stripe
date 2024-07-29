@@ -1,8 +1,6 @@
 import { createSignal, Accessor, Setter } from 'solid-js';
 import { stripeSys } from './Stripe';
 import { links } from '../property/Links';
-import CardNumber from '../components/CardNumber';
-import CardCvc from '../components/CardCvc';
 import Iban from '../components/Iban';
 import Ideal from '../components/Ideal';
 
@@ -118,38 +116,6 @@ class PaymentSys {
             this.setMessage("An unexpected error occurred.");
         }
     
-        this.setIsLoading(false);
-    }
-
-    // handleCardSubmit : handler for <CardNumber> & <CardExpiry> & <CardCvc>. I don't know why it does not work on <Card> :(
-    handleCardSubmit = async (e: Event) => {
-        e.preventDefault();
-
-        if (!stripeSys.stripe() || !stripeSys.elements()) {
-            return;
-        }
-
-        this.setIsLoading(true);
-        
-        const { error } = await stripeSys.stripe()!.confirmCardPayment(stripeSys.clientSecret(), {
-            payment_method: {
-                card: stripeSys.elements()!.getElement(CardNumber)!,
-                billing_details: {
-                    // address : { city, country, line1, line2, postal_code, state }
-                    // email : string | null
-                    // name : string | null
-                    // phone : string | null
-                },
-                // more about payment_method : https://docs.stripe.com/api/payment_methods
-            },
-            return_url: links.localhost + '/redirection',
-            // more about confirmCardPayment : https://docs.stripe.com/js/payment_intents/confirm_card_payment
-        })
-
-        if(error){
-            this.setMessage(error.message as string);
-        }
-        
         this.setIsLoading(false);
     }
 
