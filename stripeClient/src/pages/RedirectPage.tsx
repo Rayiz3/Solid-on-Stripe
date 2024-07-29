@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js'
-import { Match, Switch } from 'solid-js';
+import { Show } from 'solid-js';
 import { useLocation } from '@solidjs/router';
 
 import { style } from '@macaron-css/core';
@@ -8,7 +8,7 @@ import { size } from '../property/Size';
 import { themeSys } from '../system/Theme';
 import Goback from '../components/Goback';
 
-type pageFromType = 'payment' | 'subscriptionCode' | 'subscriptionDashboard'
+type pageFromType = 'paymentCode' | 'subscriptionCode'
 
 const container = style({
     display: 'flex',
@@ -61,18 +61,17 @@ const portalButton = style({
 const RedirectPage: Component = () => {
   const location = useLocation()
   const state = location.state as {sessionId: string, pageFrom: pageFromType}
+  console.log(state.pageFrom)
 
   return (
     <div class={container}>
       <div class={message}>Payment succeeded!</div>
-      <Switch>
-        <Match when={state.pageFrom === 'subscriptionCode'}>
+        <Show when={state.pageFrom === 'subscriptionCode'}>
           <form class="getPortal" action={links.serverAddress + "/create-portal-session"} method="post">
             <input type="hidden" name="session_id" value={state.sessionId}/>
             <button class={portalButton} type="submit"> Manage your billing information </button>
           </form>
-        </Match>
-      </Switch>
+        </Show>
       <Goback/>
     </div>
   )

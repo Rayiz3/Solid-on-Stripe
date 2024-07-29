@@ -1,4 +1,4 @@
-import type { Component } from "solid-js"
+import { Show, type Component } from "solid-js"
 import { style } from "@macaron-css/core"
 
 import { themeSys } from "../system/Theme"
@@ -9,8 +9,9 @@ import { links } from "../property/Links"
 type PlanType = {
     name: string,
     price: number,
-    interval: "Day" | "Week" | "Month" | "Year",
-    lookup_key: string,
+    interval?: "Day" | "Week" | "Month" | "Year",
+    lookupKey: string,
+    payType: "payment" | "subscription",
 }
 
 const container = style({
@@ -75,14 +76,20 @@ const Plan: Component<PlanType> = (props: PlanType) => {
             <div class={description}>
                 {/* such parts require coded-products */}
                 <h3>{props.name}</h3>
-                <h5>{`$ ${props.price.toFixed(2)} / ${props.interval}`}</h5>
+                <Show when={props.interval}
+                    fallback={
+                    <h5>{`$ ${props.price.toFixed(2)}`}</h5>
+                    }>
+                    <h5>{`$ ${props.price.toFixed(2)} / ${props.interval}`}</h5>
+                </Show>
             </div>
             <form action={links.serverAddress + "/create-checkout-session"} method="post">
                 {/*  lookup_keys : server can search the price with these lookup_keys  */}
                 {/*  You can specify up to 10 lookup_keys.                             */}
-                <input type="hidden" name="lookup_key" value={props.lookup_key} />
+                <input type="hidden" name="lookup_key" value={props.lookupKey} />
+                <input type="hidden" name="pay_type" value={props.payType} />
                 <button class={checkoutButton} type="submit">
-                    Subscribe
+                    {props.payType === "payment" ? "Pay" : "Subscribe"}
                 </button>
             </form>
         </div>

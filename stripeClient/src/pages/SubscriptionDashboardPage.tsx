@@ -2,7 +2,7 @@ import type { Component } from 'solid-js';
 import { style } from '@macaron-css/core';
 
 import { themeSys } from '../system/Theme';
-import PricingTable from '../components/PricingTable';
+import PricingTableDashboard from '../components/PricingTableDashboard';
 import Goback from '../components/Goback';
 
 const container = style({
@@ -22,7 +22,7 @@ const container = style({
 const SubscriptionDashboardPage: Component = () => {
     return(
         <div class={container}>
-            <PricingTable payType="subscribe"/>
+            <PricingTableDashboard payType="subscription"/>
             <Goback />
         </div>
     )

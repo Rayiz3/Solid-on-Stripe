@@ -57,6 +57,7 @@ def create_checkout_session():
             lookup_keys=[request.form['lookup_key']],
             expand=['data.product']
         )
+        pay_mode = request.form['pay_type']
 
         checkout_session = stripe.checkout.Session.create(
             line_items=[
@@ -65,8 +66,8 @@ def create_checkout_session():
                     'quantity': 1,
                 },
             ],
-            mode='subscription',  # this is subscription
-            success_url=CLIENT_DOMAIN + '/subscribeCode?success=true&session_id={CHECKOUT_SESSION_ID}', # when payment success
+            mode=pay_mode,  # this is subscription
+            success_url=CLIENT_DOMAIN + '/subscribeCode?success=true&mode='+pay_mode+'&session_id={CHECKOUT_SESSION_ID}', # when payment success
             cancel_url=CLIENT_DOMAIN + '/subscribeCode?canceled=true', # when user go back to previous page
         )
         return redirect(checkout_session.url, code=303)
@@ -75,7 +76,7 @@ def create_checkout_session():
         print(e)
         return "Server error", 500
 
-
+# create portal session : make portal session for user
 @app.route('/create-portal-session', methods=['POST'])
 def create_portal_session():
         # For demonstration purposes, we're using the Checkout session to retrieve the customer ID.

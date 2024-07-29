@@ -1,4 +1,4 @@
-import type { Component } from "solid-js"
+import { Show, type Component } from "solid-js"
 import { style } from "@macaron-css/core"
 
 import { themeSys } from "../system/Theme"
@@ -21,11 +21,17 @@ const container = style({
     
 })
 
-const PricingTableCode: Component = () => {
+const PricingTableCode: Component<{payType: "payment" | "subscription"}> = (props) => {
     return (
         <div class={container}>
-            <Plan name='Starter Plan' price={5.00} interval="Month" lookup_key="test_sub_500pm"/>
-            <Plan name='Advanced Plan' price={7.50} interval="Month" lookup_key="test_sub_750pm"/>
+            <Show when={props.payType === "payment"}>
+                <Plan name='Starter Product' price={10.00} lookupKey="test_prod_1000" payType="payment"/>
+                <Plan name='Advanced Product' price={20.00} lookupKey="test_prod_2000" payType="payment"/>
+            </Show>
+            <Show when={props.payType === "subscription"}>
+                <Plan name='Starter Plan' price={5.00} interval="Month" lookupKey="test_sub_500pm" payType="subscription"/>
+                <Plan name='Advanced Plan' price={7.50} interval="Month" lookupKey="test_sub_750pm" payType="subscription"/>
+            </Show>
         </div>
     )
 }

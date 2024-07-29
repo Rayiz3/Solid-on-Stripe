@@ -4,7 +4,6 @@ import { style } from '@macaron-css/core';
 import { themeSys } from '../system/Theme';
 import PricingTableCode from '../components/PricingTableCode';
 import Goback from '../components/Goback';
-import RedirectPage from './RedirectPage';
 import { useNavigate } from '@solidjs/router';
 
 const container = style({
@@ -27,7 +26,6 @@ const container = style({
 })
 
 const SubscriptionCodePage: Component = () => {
-    const [success, setSuccess] = createSignal<boolean>(false);
     const [sessionId, setSessionId] = createSignal<string>("");
     const navigate = useNavigate();
 
@@ -36,23 +34,15 @@ const SubscriptionCodePage: Component = () => {
         
         // when payment successes
         if (query.get('success')){
-            setSuccess(true);
             setSessionId(query.get('session_id')!);
-            navigate('/redirection', {replace: true, state: {sessionId: sessionId(), pageFrom: 'subscriptionCode'}})
-        }
-        
-        // when user goes back to the previous page (here)
-        if (query.get('canceled')) {
-            setSuccess(false);
+            navigate('/redirection', {replace: true, state: {sessionId: sessionId(), pageFrom: `${query.get('mode')}Code`}})
         }
     })
 
     return(
         <div class={container}>
-            <Show when={!success()}>
-                <PricingTableCode />
-                <Goback />
-            </Show>
+            <PricingTableCode payType="subscription"/>
+            <Goback />
         </div>
     )
 };
