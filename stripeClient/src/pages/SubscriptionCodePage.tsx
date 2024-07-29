@@ -1,10 +1,11 @@
-import { createEffect, createSignal, Show, type Component } from 'solid-js';
+import { createEffect, type Component } from 'solid-js';
+import { useNavigate } from '@solidjs/router';
 import { style } from '@macaron-css/core';
 
 import { themeSys } from '../system/Theme';
+import { checkoutSys } from '../system/Checkout';
 import PricingTableCode from '../components/PricingTableCode';
 import Goback from '../components/Goback';
-import { useNavigate } from '@solidjs/router';
 
 const container = style({
     display: 'flex',
@@ -26,17 +27,10 @@ const container = style({
 })
 
 const SubscriptionCodePage: Component = () => {
-    const [sessionId, setSessionId] = createSignal<string>("");
-    const navigate = useNavigate();
+    const navigator = useNavigate()
 
     createEffect(() => {
-        const query = new URLSearchParams(window.location.search)
-        
-        // when payment successes
-        if (query.get('success')){
-            setSessionId(query.get('session_id')!);
-            navigate('/redirection', {replace: true, state: {sessionId: sessionId(), pageFrom: `${query.get('mode')}Code`}})
-        }
+        checkoutSys.handleCheckoutSubmit(navigator)
     })
 
     return(
