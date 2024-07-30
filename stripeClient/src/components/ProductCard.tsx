@@ -6,7 +6,7 @@ import { fonts } from '../property/Styles';
 import { size } from "../property/Size"
 import { links } from "../property/Links"
 
-type PlanType = {
+type ProductCardType = {
     name: string,
     price: number,
     interval?: "Day" | "Week" | "Month" | "Year",
@@ -70,7 +70,7 @@ const checkoutButton = style({
     }
 })
 
-const Plan: Component<PlanType> = (props: PlanType) => {
+const ProductCard: Component<ProductCardType> = (props: ProductCardType) => {
     return (
         <div class={container}>
             <div class={description}>
@@ -96,4 +96,4 @@ const Plan: Component<PlanType> = (props: PlanType) => {
     )
 }
 
-export default Plan
+export default ProductCard
