@@ -6,7 +6,7 @@ import { size } from '../property/Size';
 import { fonts } from '../property/Styles';
 import { stripeSys } from '../system/Stripe';
 import { themeSys } from '../system/Theme';
-import CheckoutForm from '../components/CheckoutForm';
+import CheckoutForm from '../components/Elements/CheckoutForm';
 import Goback from '../components/Goback';
 
 const container = style({

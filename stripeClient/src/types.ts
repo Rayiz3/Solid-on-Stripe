@@ -4,10 +4,10 @@ import type { CardElementProps } from './components/Card'
 import type { CardCvcElementProps } from './components/CardCvc'
 import type { CardExpiryElementProps } from './components/CardExpiry'
 import type { CardNumberElementProps } from './components/CardNumber'
-import type { IdealBankElementProps } from './components/Ideal'
-import type { LinkAuthenticationElementProps } from './components/LinkAuthenticationElement'
-import type { PaymentElementProps } from './components/PaymentElement'
-import type { IbanElementProps } from './components/Iban'
+import type { IdealBankElementProps } from './components/Elements/Ideal'
+import type { LinkAuthenticationElementProps } from './components/Elements/LinkAuthenticationElement'
+import type { PaymentElementProps } from './components/Elements/PaymentElement'
+import type { IbanElementProps } from './components/Elements/Iban'
 
 export interface ElementProps<
   T extends stripeJs.StripeElementType,

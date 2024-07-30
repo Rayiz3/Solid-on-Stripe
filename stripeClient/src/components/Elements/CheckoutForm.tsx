@@ -1,9 +1,9 @@
 import type { Component } from 'solid-js';
 import { createEffect } from "solid-js";
 import { style } from '@macaron-css/core';
-import { size } from '../property/Size';
-import { paymentSys } from '../system/Payment';
-import { themeSys } from '../system/Theme';
+import { size } from '../../property/Size';
+import { paymentSys } from '../../system/Payment';
+import { themeSys } from '../../system/Theme';
 import PaynowButton from './PaynowButton';
 import PaymentElement from './PaymentElement';
 import ExpressCheckout from './ExpressCheckout';

@@ -1,9 +1,9 @@
 import type { Component } from 'solid-js'
 import type { StripePaymentElementChangeEvent } from '@stripe/stripe-js'
-import type { ElementProps } from '../Types'
-import { createWrapper } from '../primitives/createWrapper'
-import { createStripeElement } from '../primitives/createStripeElement'
-import { optionsPaymentElement } from '../property/LayoutOptions'
+import type { ElementProps } from '../../Types'
+import { createWrapper } from '../../primitives/createWrapper'
+import { createStripeElement } from '../../primitives/createStripeElement'
+import { optionsPaymentElement } from '../../property/LayoutOptions'
 
 export type PaymentElementProps = ElementProps<'payment', StripePaymentElementChangeEvent & { error: undefined }>
 

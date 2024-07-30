@@ -1,8 +1,8 @@
 import { createSignal, Accessor, Setter } from 'solid-js';
 import { stripeSys } from './Stripe';
 import { links } from '../property/Links';
-import Iban from '../components/Iban';
-import Ideal from '../components/Ideal';
+import Iban from '../components/Elements/Iban';
+import Ideal from '../components/Elements/Ideal';
 
 class PaymentSys {
     message: Accessor<string | null>

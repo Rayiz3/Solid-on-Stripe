@@ -1,9 +1,9 @@
 import type { Component } from 'solid-js'
-import type { ElementProps } from '../Types'
+import type { ElementProps } from '../../Types'
 import { StripeExpressCheckoutElementConfirmEvent } from '@stripe/stripe-js'
-import { createWrapper } from '../primitives/createWrapper'
-import { createStripeElement } from '../primitives/createStripeElement'
-import { optionExpressCheckout } from '../property/LayoutOptions'
+import { createWrapper } from '../../primitives/createWrapper'
+import { createStripeElement } from '../../primitives/createStripeElement'
+import { optionExpressCheckout } from '../../property/LayoutOptions'
 
 export type ExpressCheckoutProps = ElementProps<'expressCheckout', StripeExpressCheckoutElementConfirmEvent>
 

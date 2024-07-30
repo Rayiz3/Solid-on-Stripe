@@ -1,10 +1,10 @@
 import type { Component } from 'solid-js';
 import { keyframes, style } from '@macaron-css/core';
-import { paymentSys } from '../system/Payment';
-import { stripeSys } from '../system/Stripe';
-import { themeSys } from '../system/Theme';
-import { fonts } from '../property/Styles';
-import { size } from '../property/Size';
+import { paymentSys } from '../../system/Payment';
+import { stripeSys } from '../../system/Stripe';
+import { themeSys } from '../../system/Theme';
+import { fonts } from '../../property/Styles';
+import { size } from '../../property/Size';
 
 const paynowButton = style({
     display: "block",
