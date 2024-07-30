@@ -2,8 +2,8 @@ import type { Component } from 'solid-js'
 import type { StripeAddressElementChangeEvent, StripeAddressElementOptions } from '@stripe/stripe-js'
 import { mergeProps, splitProps } from 'solid-js'
 import type { ElementProps } from '../../Types'
-import { createWrapper } from '../../primitives/createWrapper'
-import { createStripeElement } from '../../primitives/createStripeElement'
+import { createWrapper } from '../../utility/createWrapper'
+import { createStripeElement } from '../../utility/createStripeElement'
 
 export type AddressProps = ElementProps<'address', StripeAddressElementChangeEvent & { error: any }> & StripeAddressElementOptions
 

@@ -1,8 +1,8 @@
 import type { Component } from 'solid-js'
 import type { StripeIdealBankElementOptions } from '@stripe/stripe-js'
 import { mergeProps, splitProps } from 'solid-js'
-import { createWrapper } from '../../primitives/createWrapper'
-import { createStripeElement } from '../../primitives/createStripeElement'
+import { createWrapper } from '../../utility/createWrapper'
+import { createStripeElement } from '../../utility/createStripeElement'
 import type { ElementProps } from '../../Types'
 
 export type IdealBankElementProps = ElementProps<'idealBank'> & StripeIdealBankElementOptions

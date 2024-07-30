@@ -61,7 +61,6 @@ const portalButton = style({
 const RedirectPage: Component = () => {
   const location = useLocation()
   const state = location.state as {sessionId: string, pageFrom: pageFromType}
-  console.log(state.pageFrom)
 
   return (
     <div class={container}>

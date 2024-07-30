@@ -16,7 +16,7 @@ class PaymentSys {
     }
 
     // redirect : whenever the Signal stripe() is changed, shows redirection page and prints payment message
-    redirect(){
+    redirect = () => {
         if (!stripeSys.stripe()){
             return
         }
@@ -50,7 +50,6 @@ class PaymentSys {
                 break;
             }
         });
-        console.log('redirect() done',this.message())
     }
 
     // handleSubmit : handler for <PaymentElement> & <LinkAuthenticationElement>
