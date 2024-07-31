@@ -9,10 +9,6 @@ import PaymentElement from './PaymentElement';
 import ExpressCheckout from './ExpressCheckout';
 import LinkAuthenticationElement from './LinkAuthenticationElement';
 import Address from './Address';
-import Card from './Card';
-import CardNumber from './CardNumber';
-import CardExpiry from './CardExpiry';
-import CardCvc from './CardCvc';
 import Iban from './Iban';
 import Ideal from './Ideal';
 
