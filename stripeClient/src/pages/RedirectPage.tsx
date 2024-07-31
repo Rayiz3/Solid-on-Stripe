@@ -53,6 +53,8 @@ const portalButton = style({
 
   cursor: 'pointer',
 
+  margin: size.space.section,
+
   ':hover': {
       filter: 'brightness(1.12)',
   }

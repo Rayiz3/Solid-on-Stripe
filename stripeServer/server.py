@@ -4,9 +4,11 @@ Python 3.6 or newer required.
 """
 import json
 import stripe
-
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from flask import Flask, redirect, jsonify, request, send_from_directory
 from flask_cors import CORS
+
 
 stripe.api_key = "sk_test_51P6R0zG1Ea829cAu8IqrZlWChn6ABEt9BuuYpNwhbdFZQWrb1KhIXXXTJe0tr6gtBVQ8pw2qzCoNWw4VOctLVHkV00rMUCPnVn"
 
@@ -52,7 +54,6 @@ def create_payment():
 def create_checkout_session():
     try:
          # lookup_keys : Only return the price with these lookup_keys, if any exist.
-         # You can specify up to 10 lookup_keys.
         prices = stripe.Price.list(
             lookup_keys=[request.form['lookup_key']],
             expand=['data.product']
@@ -89,6 +90,110 @@ def create_portal_session():
             return_url=CLIENT_DOMAIN,
         )
         return redirect(portalSession.url, code=303)
+
+
+def fulfill_checkout(session_id):
+    try:
+        # Retrieve the Checkout Session from the API with line_items expanded
+        checkout_session = stripe.checkout.Session.retrieve(
+            session_id,
+            expand=['line_items']
+        )
+
+        products = [{"id": item.price.product,
+                    "price": item.price.unit_amount,
+                    "currency": item.currency,
+                    } for item in checkout_session.line_items.data]
+
+        # Check the Checkout Session's payment_status property to determine if fulfillment should be peformed
+        if checkout_session.payment_status != 'unpaid':
+            return {
+                "stauts" : "success",
+                "mode" : checkout_session.mode,                     # payment | subscription
+                "transaction" : "purchase",                         # purchase | change | cancel
+                "customer_id" : checkout_session.customer,          # id assigned by Stripe server
+                "email" : checkout_session.customer_details.email,  # If provided, this value will be used when the Customer object is created
+                "date" : checkout_session.created,                  # Measured in seconds since the Unix epoch (1970.01.01. 09:00:00 GMT+0900)
+                "products" : products,
+            }
+        else:
+            return {
+                "status": "failed",
+            }
+    
+    except Exception as e:
+        print(e)
+        return "Server error", 500
+    
+def fulfill_subscription(session_id, transaction):
+    try:
+        date = 0
+
+        subscription = stripe.Subscription.retrieve(
+            session_id
+        )
+
+        products = [{"id": item.price.product,
+                    "price": item.price.unit_amount,
+                    "interval": item.price.recurring.interval,
+                    "currency": item.price.currency,
+                    } for item in subscription["items"].data]
+
+        # case for plan cancel
+        if (transaction == "cancel"):
+            date = subscription.canceled_at
+        # case for plan add & change
+        else:
+            date = subscription.created
+
+        return {
+            "status" : "success",
+            "mode" : "subscription",                # payment | subscription
+            "transaction" : transaction,            # add | change | cancel
+            "customer_id" : subscription.customer,  # id assigned by Stripe server
+            "date" : date,                          # Measured in seconds since the Unix epoch (1970.01.01. 09:00:00 GMT+0900)
+            "products" : products,
+        }
+
+    except Exception as e:
+        print(e)
+        return "Server error", 500
+    
+# Use the secret provided by Stripe CLI for local testing
+# or your webhook endpoint's secret.
+endpoint_secret = 'whsec_ef6b97d6c336879fd5efa57c46bd35a6243655d7c5fe7647c112f3efe448d4d4'
+
+@app.route('/webhook', methods=['POST'])
+def webhook_view():
+  payload = request.get_data(as_text=True)
+  sig_header = request.headers.get('Stripe-Signature')
+  event = None
+
+  try:
+    event = stripe.Webhook.construct_event(
+      payload, sig_header, endpoint_secret
+    )
+  except ValueError as e:
+    # Invalid payload
+    return jsonify(success=False), 400
+  except stripe.error.SignatureVerificationError as e:
+    # Invalid signature
+    return jsonify(success=False), 400
+
+  if (event['type'] in ['checkout.session.completed', 'checkout.session.async_payment_succeeded']):
+    fulfill_checkout(event['data']['object']['id'])
+
+  if (event['type'] == 'customer.subscription.updated'):
+    subscription_id = event['data']['object']['id']
+
+    if ("plan" in event['data']['previous_attributes'].keys()):
+        print(fulfill_subscription(subscription_id, "change"))
+    elif (event['data']['object']['canceled_at']):
+        print(fulfill_subscription(subscription_id, "cancel"))
+    else:
+        print(fulfill_subscription(subscription_id, "add"))
+
+  return jsonify(success=True), 200
 
 @app.route('/')
 def serve_index():
