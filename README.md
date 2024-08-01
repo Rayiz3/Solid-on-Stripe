@@ -16,3 +16,11 @@ $ npm start
 $ cd stripeServer
 $ python server.py
 ```
+
+For runninf webhook on your local testing, you need Stripe CLI.
+
+If you already has installed Stripe CLI, run the following command on your Stripe directory:
+```bash
+$ .\stripe listen --forward-to localhost:4242/webhook
+```
+Then it will give you a endpoint_secret.
