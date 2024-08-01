@@ -4,8 +4,8 @@ Python 3.6 or newer required.
 """
 import json
 import stripe
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+import datetime
+from dateutil.relativedelta import relativedelta
 from flask import Flask, redirect, jsonify, request, send_from_directory
 from flask_cors import CORS
 
@@ -19,6 +19,9 @@ CORS(app)
 
 SERVER_DOMAIN = 'http://localhost:4242'
 CLIENT_DOMAIN = 'http://localhost:3000'
+
+def convert_timestamp(date):
+    return datetime.datetime.fromtimestamp(date).strftime('%Y.%m.%d %H:%M:%S')
 
 def calculate_order_amount(items): # items : { id: "..." } []
     # Replace this constant with a calculation of the order's amount
@@ -67,7 +70,7 @@ def create_checkout_session():
                     'quantity': 1,
                 },
             ],
-            mode=pay_mode,  # this is subscription
+            mode=pay_mode,  # this is subscription or payment
             success_url=CLIENT_DOMAIN + '/subscribeCode?success=true&mode='+pay_mode+'&session_id={CHECKOUT_SESSION_ID}', # when payment success
             cancel_url=CLIENT_DOMAIN + '/subscribeCode?canceled=true', # when user go back to previous page
         )
@@ -113,7 +116,8 @@ def fulfill_checkout(session_id):
                 "transaction" : "purchase",                         # purchase | change | cancel
                 "customer_id" : checkout_session.customer,          # id assigned by Stripe server
                 "email" : checkout_session.customer_details.email,  # If provided, this value will be used when the Customer object is created
-                "date" : checkout_session.created,                  # Measured in seconds since the Unix epoch (1970.01.01. 09:00:00 GMT+0900)
+                "date" : convert_timestamp(checkout_session.created),                                      # Measured in seconds since the Unix epoch (1970.01.01. 09:00:00 GMT+0900)
+                "date_expiry" : None,                
                 "products" : products,
             }
         else:
@@ -127,7 +131,8 @@ def fulfill_checkout(session_id):
     
 def fulfill_subscription(session_id, transaction):
     try:
-        date = 0
+        date = 0 # date when the transaction was created
+        date_expiry = None # date of expected expiry date
 
         subscription = stripe.Subscription.retrieve(
             session_id
@@ -142,6 +147,7 @@ def fulfill_subscription(session_id, transaction):
         # case for plan cancel
         if (transaction == "cancel"):
             date = subscription.canceled_at
+            date_expiry = convert_timestamp(subscription.cancel_at)
         # case for plan add & change
         else:
             date = subscription.created
@@ -151,7 +157,8 @@ def fulfill_subscription(session_id, transaction):
             "mode" : "subscription",                # payment | subscription
             "transaction" : transaction,            # add | change | cancel
             "customer_id" : subscription.customer,  # id assigned by Stripe server
-            "date" : date,                          # Measured in seconds since the Unix epoch (1970.01.01. 09:00:00 GMT+0900)
+            "date" : convert_timestamp(date),
+            "date_expiry" : date_expiry,
             "products" : products,
         }
 
@@ -179,9 +186,25 @@ def webhook_view():
   except stripe.error.SignatureVerificationError as e:
     # Invalid signature
     return jsonify(success=False), 400
+  
+  # for each transaction, get information:
+  # {
+  # 	'status': 'success' | 'failed',
+  # 	'mode': 'payment' | 'subscription',
+  # 	'transaction': 'purchase' | 'add' | 'change' | 'cancel',
+  # 	'customer_id': string,
+  #     'email': string,
+  #     'date': datetime,
+  #     'date_expiry': datetime | None,
+  #     'products': {
+  #         'id': string,
+  #         'price': number,
+  #         'currency': string,         
+  #     }[]
+  # }
 
   if (event['type'] in ['checkout.session.completed', 'checkout.session.async_payment_succeeded']):
-    fulfill_checkout(event['data']['object']['id'])
+    print(fulfill_checkout(event['data']['object']['id']))
 
   if (event['type'] == 'customer.subscription.updated'):
     subscription_id = event['data']['object']['id']
@@ -189,7 +212,8 @@ def webhook_view():
     if ("plan" in event['data']['previous_attributes'].keys()):
         print(fulfill_subscription(subscription_id, "change"))
     elif (event['data']['object']['canceled_at']):
-        print(fulfill_subscription(subscription_id, "cancel"))
+        if ("cancel_at" in event['data']['previous_attributes'].keys()):
+            print(fulfill_subscription(subscription_id, "cancel"))
     else:
         print(fulfill_subscription(subscription_id, "add"))
 
