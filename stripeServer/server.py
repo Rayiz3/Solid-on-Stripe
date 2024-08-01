@@ -56,7 +56,7 @@ def create_payment():
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
     try:
-         # lookup_keys : Only return the price with these lookup_keys, if any exist.
+        # lookup_keys : Only return the price with these lookup_keys, if any exist.
         prices = stripe.Price.list(
             lookup_keys=[request.form['lookup_key']],
             expand=['data.product']
@@ -70,6 +70,8 @@ def create_checkout_session():
                     'quantity': 1,
                 },
             ],
+            #ui_mode="embedded",
+            customer="cus_QJuqlN4E8qX64x",  # if blank in case of subscription & payment(customer_createion=always), it will create a new customer.
             mode=pay_mode,  # this is subscription or payment
             success_url=CLIENT_DOMAIN + '/subscribeCode?success=true&mode='+pay_mode+'&session_id={CHECKOUT_SESSION_ID}', # when payment success
             cancel_url=CLIENT_DOMAIN + '/subscribeCode?canceled=true', # when user go back to previous page
@@ -111,7 +113,7 @@ def fulfill_checkout(session_id):
         # Check the Checkout Session's payment_status property to determine if fulfillment should be peformed
         if checkout_session.payment_status != 'unpaid':
             return {
-                "stauts" : "success",
+                "status" : "success",
                 "mode" : checkout_session.mode,                     # payment | subscription
                 "transaction" : "purchase",                         # purchase | change | cancel
                 "customer_id" : checkout_session.customer,          # id assigned by Stripe server
