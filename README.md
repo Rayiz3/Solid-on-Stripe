@@ -17,7 +17,7 @@ $ cd stripeServer
 $ python server.py
 ```
 
-For runninf webhook on your local testing, you need Stripe CLI.
+For running webhook on your local testing, you need Stripe CLI.
 
 If you already has installed Stripe CLI, run the following command on your Stripe directory:
 ```bash
