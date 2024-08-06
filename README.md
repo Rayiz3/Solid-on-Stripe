@@ -11,6 +11,13 @@ $ cd stripeClient
 $ npm start
 ```
 
+If the dependencies have not been resolved, you should install them:
+
+```bash
+$ cd stripeClient
+$ npm i
+```
+
 # Server side running
 ```bash
 $ cd stripeServer
@@ -23,4 +30,9 @@ If you already has installed Stripe CLI, run the following command on your Strip
 ```bash
 $ .\stripe listen --forward-to localhost:4242/webhook
 ```
-Then it will give you a endpoint_secret.
+
+If it runs correctly, it will give you such message and an endpoint_secret.
+
+```bash
+$ Ready! You are using Stripe API Version [YYYY-MM-DD]. Your webhook signing secret is <whsec_...> (^C to quit)
+```
