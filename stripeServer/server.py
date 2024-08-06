@@ -5,7 +5,6 @@ Python 3.6 or newer required.
 import json
 import stripe
 import datetime
-from dateutil.relativedelta import relativedelta
 from flask import Flask, redirect, jsonify, request, send_from_directory
 from flask_cors import CORS
 
@@ -83,7 +82,23 @@ def create_checkout_session():
                     'quantity': 1,
                 },
             ],
-            #ui_mode="embedded",
+            allow_promotion_codes=True,
+            custom_fields=[
+                {
+                    'key': 'field1',
+                    'label': {
+                        'custom': 'custom field1',
+                        'type': 'custom'
+                    },
+                    'type': 'text', # 'dropdown' | 'numeric' | 'text'
+                    'optional': False,
+                    'text': {
+                        'default_value': 'field 1',
+                        'maximum_length': 30,
+                        'minimum_length': 1
+                    }
+                }
+            ],
             customer=customer_id,  # if blank in case of subscription & payment(customer_createion=always), it will create a new customer.
             mode=pay_mode,  # this is subscription or payment
             success_url=CLIENT_DOMAIN + '/subscribeCode?success=true&mode='+pay_mode+'&session_id={CHECKOUT_SESSION_ID}', # when payment success
