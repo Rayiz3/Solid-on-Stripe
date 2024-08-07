@@ -1,9 +1,7 @@
-import { createEffect, type Component } from 'solid-js';
-import { useNavigate } from '@solidjs/router';
+import type { Component } from 'solid-js';
 import { style } from '@macaron-css/core';
 
 import { themeSys } from '../system/Theme';
-import { checkoutSys } from '../system/Checkout';
 import PricingTableCheckout from '../components/PricingTable/PricingTableCheckout';
 import Goback from '../components/Goback';
 
@@ -27,12 +25,6 @@ const container = style({
 })
 
 const CheckoutPaymentPage: Component = () => {
-    const navigator = useNavigate()
-    
-    createEffect(() => {
-        checkoutSys.handleCheckoutSubmit(navigator)
-    })
-
     return(
         <div class={container}>
             <PricingTableCheckout payType="payment"/>

@@ -1,4 +1,3 @@
-import { Navigator } from "@solidjs/router"
 import { Accessor, createSignal, Setter } from "solid-js"
 
 class CheckoutSys {
@@ -9,15 +8,11 @@ class CheckoutSys {
         ([this.sessionId, this.setSessionId] = createSignal<string>(""))
     }
 
-    handleCheckoutSubmit = (navigate: Navigator) => {
+    handleCheckoutSubmit = () => {
         const query = new URLSearchParams(window.location.search)
-
         // when payment successes
         if (query.get('success')){
             this.setSessionId(query.get('session_id')!);
-            navigate('/redirection', {replace: true,
-                                      state: {sessionId: this.sessionId(),
-                                              pageFrom: `${query.get('mode')}Code`}})
         }
     }
 }

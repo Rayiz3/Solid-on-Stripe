@@ -1,14 +1,12 @@
 import type { Component } from 'solid-js'
-import { Show } from 'solid-js';
-import { useLocation } from '@solidjs/router';
+import { createEffect, Show } from 'solid-js';
 
 import { style } from '@macaron-css/core';
 import { links } from '../property/Links';
 import { size } from '../property/Size';
 import { themeSys } from '../system/Theme';
+import { checkoutSys } from '../system/Checkout';
 import Goback from '../components/Goback';
-
-type pageFromType = 'paymentCode' | 'subscriptionCode'
 
 const container = style({
     display: 'flex',
@@ -61,15 +59,17 @@ const portalButton = style({
 })
 
 const RedirectPage: Component = () => {
-  const location = useLocation()
-  const state = location.state as {sessionId: string, pageFrom: pageFromType}
+
+  createEffect(() => {
+    checkoutSys.handleCheckoutSubmit()
+  })
 
   return (
     <div class={container}>
       <div class={message}>Payment succeeded!</div>
-        <Show when={state.pageFrom === 'subscriptionCode'}>
+        <Show when={checkoutSys.sessionId()}>
           <form class="getPortal" action={links.serverAddress + "/create-portal-session"} method="post">
-            <input type="hidden" name="session_id" value={state.sessionId}/>
+            <input type="hidden" name="session_id" value={checkoutSys.sessionId()}/>
             <button class={portalButton} type="submit"> Manage your billing information </button>
           </form>
         </Show>
