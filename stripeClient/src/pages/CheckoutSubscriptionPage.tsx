@@ -4,7 +4,7 @@ import { style } from '@macaron-css/core';
 
 import { themeSys } from '../system/Theme';
 import { checkoutSys } from '../system/Checkout';
-import PricingTableCode from '../components/PricingTableCode';
+import PricingTableCheckout from '../components/PricingTable/PricingTableCheckout';
 import Goback from '../components/Goback';
 
 const container = style({
@@ -35,7 +35,7 @@ const CheckoutSubscriptionPage: Component = () => {
 
     return(
         <div class={container}>
-            <PricingTableCode payType="subscription"/>
+            <PricingTableCheckout payType="subscription"/>
             <Goback />
         </div>
     )

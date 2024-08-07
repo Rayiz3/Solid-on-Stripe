@@ -21,7 +21,7 @@ declare module "solid-js" {
   }
 
 // payment request for single integration for Apple pay, Google pay, Microsoft pay, etc.
-const PricingTableDashboard: Component<{payType: "payment" | "subscription"}> = (props) => {
+const PricingTableLinks: Component<{payType: "payment" | "subscription"}> = (props) => {
     return(
       <>
         {/* if it is one-time-payment*/}
@@ -45,4 +45,4 @@ const PricingTableDashboard: Component<{payType: "payment" | "subscription"}> = 
     )
 }
 
-export default PricingTableDashboard
+export default PricingTableLinks

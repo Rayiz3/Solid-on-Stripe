@@ -1,9 +1,9 @@
 import { Show, type Component } from "solid-js"
 import { style } from "@macaron-css/core"
 
-import { themeSys } from "../system/Theme"
-import { fonts } from '../property/Styles';
-import { size } from "../property/Size"
+import { themeSys } from "../../system/Theme"
+import { fonts } from '../../property/Styles';
+import { size } from "../../property/Size"
 import ProductCard from './ProductCard';
 
 const container = style({
@@ -21,7 +21,7 @@ const container = style({
     
 })
 
-const PricingTableCode: Component<{payType: "payment" | "subscription"}> = (props) => {
+const PricingTableCheckout: Component<{payType: "payment" | "subscription"}> = (props) => {
     return (
         <div class={container}>
             <Show when={props.payType === "payment"}>
@@ -36,4 +36,4 @@ const PricingTableCode: Component<{payType: "payment" | "subscription"}> = (prop
     )
 }
 
-export default PricingTableCode
+export default PricingTableCheckout

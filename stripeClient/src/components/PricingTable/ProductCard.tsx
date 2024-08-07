@@ -1,10 +1,10 @@
 import { Show, type Component } from "solid-js"
 import { style } from "@macaron-css/core"
 
-import { themeSys } from "../system/Theme"
-import { fonts } from '../property/Styles';
-import { size } from "../property/Size"
-import { links } from "../property/Links"
+import { themeSys } from "../../system/Theme"
+import { fonts } from '../../property/Styles';
+import { size } from "../../property/Size"
+import { links } from "../../property/Links"
 
 type ProductCardType = {
     name: string,
