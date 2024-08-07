@@ -19,7 +19,7 @@ const container = style({
 
 // pricing table id : see https://dashboard.stripe.com/test/pricing-tables/prctbl_1PgGdoG1Ea829cAuivcJYiGE
 // publishable-key : keys.public.Audai
-const SubscriptionDashboardPage: Component = () => {
+const LinksSubscriptionPage: Component = () => {
     return(
         <div class={container}>
             <PricingTableDashboard payType="subscription"/>
@@ -28,4 +28,4 @@ const SubscriptionDashboardPage: Component = () => {
     )
 };
 
-export default SubscriptionDashboardPage;
+export default LinksSubscriptionPage;

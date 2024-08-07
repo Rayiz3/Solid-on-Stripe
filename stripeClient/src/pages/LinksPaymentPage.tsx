@@ -19,7 +19,7 @@ const container = style({
 
 // pricing table id : see https://dashboard.stripe.com/test/pricing-tables/prctbl_1Pgjc0G1Ea829cAumRKcl1OB
 // publishable-key : keys.public.Audai
-const PaymentDashboardPage: Component = () => {
+const LinksPaymentPage: Component = () => {
     return(
         <div class={container}>
             <PricingTableDashboard payType='payment'/>
@@ -28,4 +28,4 @@ const PaymentDashboardPage: Component = () => {
     )
 };
 
-export default PaymentDashboardPage;
+export default LinksPaymentPage;

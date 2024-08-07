@@ -2,22 +2,22 @@ import { Route } from '@solidjs/router'
 
 import SelectionPage from './SelectionPage'
 import RedirectPage from './RedirectPage'
-import PaymentPage from './PaymentPage'
-import PaymentCodePage from './PaymentCodePage'
-import PaymentDashboardPage from './PaymentDashboardPage'
-import SubscriptionDashboardPage from './SubscriptionDashboardPage'
-import SubscriptionCodePage from './SubscriptionCodePage'
+import CustomFlowPage from './CustomFlowPage'
+import CheckoutPaymentPage from './CheckoutPaymentPage'
+import LinksPaymentPage from './LinksPaymentPage'
+import LinksSubscriptionPage from './LinksSubscriptionPage'
+import CheckoutSubscriptionPage from './CheckoutSubscriptionPage'
 
 const Pages = () => {
   return (
     <>
       <Route path="/" component={SelectionPage} />
       <Route path="/redirection" component={RedirectPage} />
-      <Route path="/payment" component={PaymentPage} />
-      <Route path="/paymentCode" component={PaymentCodePage} />
-      <Route path="/paymentDashboard" component={PaymentDashboardPage} />
-      <Route path="/subscribeCode" component={SubscriptionCodePage} />
-      <Route path="/subscribeDashboard" component={SubscriptionDashboardPage} />
+      <Route path="/customflow" component={CustomFlowPage} />
+      <Route path="/checkoutpayment" component={CheckoutPaymentPage} />
+      <Route path="/linkspayment" component={LinksPaymentPage} />
+      <Route path="/checkoutsubscription" component={CheckoutSubscriptionPage} />
+      <Route path="/linkssubscription" component={LinksSubscriptionPage} />
     </>
   )
 }

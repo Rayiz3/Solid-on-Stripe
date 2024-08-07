@@ -26,7 +26,7 @@ const container = style({
     backgroundColor : themeSys.state.bg1,
 })
 
-const PaymentCodePage: Component = () => {
+const CheckoutPaymentPage: Component = () => {
     const navigator = useNavigate()
     
     createEffect(() => {
@@ -40,4 +40,4 @@ const PaymentCodePage: Component = () => {
         </div>
     )
 };
-export default PaymentCodePage;
+export default CheckoutPaymentPage;

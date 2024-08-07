@@ -24,7 +24,7 @@ const container = style({
   color: themeSys.state.text,
 })
 
-const PaymentPage: Component = () => {
+const CustomFlowPage: Component = () => {
   // Make sure to call loadStripe only once to avoid recreating the Stripe object on every render.
   onMount(async () => stripeSys.initialize());
 
@@ -38,4 +38,4 @@ const PaymentPage: Component = () => {
   );
 };
 
-export default PaymentPage;
+export default CustomFlowPage;

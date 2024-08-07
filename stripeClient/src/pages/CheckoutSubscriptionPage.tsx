@@ -26,7 +26,7 @@ const container = style({
     backgroundColor : themeSys.state.bg1,
 })
 
-const SubscriptionCodePage: Component = () => {
+const CheckoutSubscriptionPage: Component = () => {
     const navigator = useNavigate()
 
     createEffect(() => {
@@ -40,4 +40,4 @@ const SubscriptionCodePage: Component = () => {
         </div>
     )
 };
-export default SubscriptionCodePage;
+export default CheckoutSubscriptionPage;
