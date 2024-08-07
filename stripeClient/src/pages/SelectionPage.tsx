@@ -36,11 +36,11 @@ const selectionButton = style({
 const SelectionPage: Component = () => {
     return (
         <div class={container}>
-            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/customflow"}>One-time payment (payment element)</button>
-            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/checkoutpayment"}>One-time payment (code)</button>
-            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/linkspayment"}>One-time payment (dashboard)</button>
-            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/checkoutsubscription"}>Subscription (code)</button>
-            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/linkssubscription"}>Subscription (dashboard)</button>
+            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/customflow"}>One-time payment (custom flow)</button>
+            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/checkoutpayment"}>One-time payment (checkout)</button>
+            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/checkoutsubscription"}>Subscription (checkout)</button>
+            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/linkspayment"}>One-time payment (links)</button>
+            <button class={selectionButton} onClick={() => window.location.href = links.localhost + "/linkssubscription"}>Subscription (links)</button>
         </div>
     )
   }

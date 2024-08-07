@@ -101,8 +101,8 @@ def create_checkout_session():
             ],
             customer=customer_id,  # if blank in case of subscription & payment(customer_createion=always), it will create a new customer.
             mode=pay_mode,  # this is subscription or payment
-            success_url=CLIENT_DOMAIN + '/subscribeCode?success=true&mode='+pay_mode+'&session_id={CHECKOUT_SESSION_ID}', # when payment success
-            cancel_url=CLIENT_DOMAIN + '/subscribeCode?canceled=true', # when user go back to previous page
+            success_url=CLIENT_DOMAIN + '/checkoutsubscription?success=true&mode='+pay_mode+'&session_id={CHECKOUT_SESSION_ID}', # when payment success
+            cancel_url=CLIENT_DOMAIN + '/checkoutsubscription?canceled=true', # when user go back to previous page
         )
         return redirect(checkout_session.url, code=303)
     
