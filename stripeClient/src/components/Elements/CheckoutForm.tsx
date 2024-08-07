@@ -46,12 +46,6 @@ const CheckoutForm: Component = () => {
 
           {/*<Address mode={'shipping'} class={elementsMargin} />*/}
 
-          {/*<Card class={elementsMargin}/>*/}
-
-          {/*<CardNumber class={elementsMargin}/>*/}
-          {/*<CardExpiry class={elementsMargin}/>*/}
-          {/*<CardCvc class={elementsMargin}/>*/}
-
           {/*<Iban class={elementsMargin} supportedCountries={['SEPA']}/>*/}
           
           {/*<Ideal class={elementsMargin} />*/}
